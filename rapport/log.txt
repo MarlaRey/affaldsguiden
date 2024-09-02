@@ -1,2 +1,8 @@
 Jeg har sat projektet op, det går indtil videre uden videre problemer. her til middag er der styr på routing og rawsketches for siderne er sat op.
 
+Universal styæing med scss:
+Jeg laver mixins i app.scss som jeg kan bruge på tværs af appilkationen. dette gør jeg til mine fonte. til farverne laver jeg variabler.
+
+lorte bg biullede i footer. jeg synes det er noget sjusk fra grafikerens side at levere et baggrundsbillede der ikke er færdig
+
+mandag eftermiddag: det er gået super godt. jeg føler mig godt med. har ikke haft de store udfordringher. dejligt at få main-layout på plads. og god erfaring fra sidst med at sørge for at få det responsivt fra start. Det laver jeg i aften eller i motrgen tidligt. nu skal jeg til fællesspi.

@@ -5,14 +5,12 @@
     background-size: cover; // Dækker hele bredden af footeren
     height: 363px; // Højden på footeren
     display: flex;
-    justify-content: space-between; // Fordeler kolonnerne jævnt
-    align-items: center; // Vertikalt centrerer indholdet i kolonnerne
-
+    align-items: flex-end; // Sørg for, at indholdet placeres i bunden
+    padding-bottom: 2rem; // 2rem afstand til bunden
 
     .content {
         width: 1440px;
         margin: 0 auto;
-        height: 0px;
         display: flex;
         justify-content: space-between;
 
@@ -24,9 +22,11 @@
         .column1 {
             text-align: left;
             flex-direction: column;
-            h2{
+            
+            h2 {
                 @include heading2; // Anvend heading2 mixin til h2
             }
+            
             p {
                 @include body-text; // Anvend body-text mixin til p
                 margin: 0;
@@ -37,18 +37,17 @@
         .column2 {
             justify-content: center; // Centrer billederne
             gap: 1rem;
-            img{
+            
+            img {
                 border-radius: 8px;
-                top: 228px;
-                width:143px;
-                height: 49px
-
-
+                width: 143px;
+                height: 49px;
             }
         }
 
         .column3 {
             justify-content: flex-end; // Højre-juster billederne
+            
             .socialImg {
                 margin: 0;
                 width: 208px;
