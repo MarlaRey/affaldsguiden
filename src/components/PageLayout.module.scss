@@ -1,0 +1,30 @@
+@import '../App.scss';
+
+.pageLayout {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; // Sikrer at layoutet fylder hele browserhøjden
+    .bgFade{
+        background: linear-gradient(to bottom, $natur, #ffffff);
+
+
+    }
+
+    .main {
+        width: 1440px;
+        margin: 0 auto; // Center main horisontalt
+        background: linear-gradient(to bottom, $light-green, #ffffff);
+        padding: 20px; // Tilføjer lidt indvendig margin for bedre layout
+    }
+}
+
+// Baggrundsfarve for header og navigation
+.pageLayout > *:first-child, .pageLayout > *:nth-child(2) {
+    background-color: #ffffff;
+    margin: 0 auto; // Center main horisontalt
+}
+
+footer{
+    margin-top: auto; // Skubber footeren til bunden, hvis Main ikke fylder hele siden
+}

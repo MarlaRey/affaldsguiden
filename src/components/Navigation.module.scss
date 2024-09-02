@@ -1,0 +1,55 @@
+@import '../App.scss';
+.nul{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+}
+.border {
+    border-bottom: 1px solid $moss-green; // 1px solid linje
+    width: 100vw; // Sørg for, at linjen fylder hele viewport-bredden
+    position: relative; // Gør det muligt at placere det korrekt
+}
+.navigation {
+    width: 1440px;
+    top: 75px;
+    margin:0 auto;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.15);
+    opacity: 1; // Sørg for, at menuen er synlig
+
+    ul {
+        display: flex;
+        justify-content: space-between; // Fylder hele bredden
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        width: 100%; // Sørg for, at ul fylder hele bredden
+
+        li {
+            margin: 0;
+            border-left: 1px solid $moss-green;
+            
+            width: 100%;
+            text-align: center;
+            &:last-child{
+                border-right: 1px solid $moss-green;
+            }
+
+            a {
+                display: block;
+                padding: 15px 20px;
+                text-decoration: none;
+                color: $dark-grey;
+                transition: background-color 0.3s, color 0.3s;
+
+                &:hover {
+                    background-color: $kaki;
+                }
+            }
+
+            &.active a {
+                background-color: $moss-green; // Baggrundsfarve for aktivt menupunkt
+                color: white; // Tekstfarve for aktivt menupunkt
+            }
+        }
+    }
+}

@@ -1,0 +1,59 @@
+@import '../App.scss';
+
+.footer {
+    background: url('../assets/img/Footer Bg.png') no-repeat center top; // Placer baggrunden centreret og toppen synlig
+    background-size: cover; // Dækker hele bredden af footeren
+    height: 363px; // Højden på footeren
+    display: flex;
+    justify-content: space-between; // Fordeler kolonnerne jævnt
+    align-items: center; // Vertikalt centrerer indholdet i kolonnerne
+
+
+    .content {
+        width: 1440px;
+        margin: 0 auto;
+        height: 0px;
+        display: flex;
+        justify-content: space-between;
+
+        .column1, .column2, .column3 {
+            flex: 1;
+            display: flex;
+        }
+
+        .column1 {
+            text-align: left;
+            flex-direction: column;
+            h2{
+                @include heading2; // Anvend heading2 mixin til h2
+            }
+            p {
+                @include body-text; // Anvend body-text mixin til p
+                margin: 0;
+                line-height: 1.5; // Juster linjehøjde efter behov
+            }
+        }
+
+        .column2 {
+            justify-content: center; // Centrer billederne
+            gap: 1rem;
+            img{
+                border-radius: 8px;
+                top: 228px;
+                width:143px;
+                height: 49px
+
+
+            }
+        }
+
+        .column3 {
+            justify-content: flex-end; // Højre-juster billederne
+            .socialImg {
+                margin: 0;
+                width: 208px;
+                height: 48px;
+            }
+        }
+    }
+}

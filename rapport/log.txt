@@ -1,0 +1,2 @@
+Jeg har sat projektet op, det går indtil videre uden videre problemer. her til middag er der styr på routing og rawsketches for siderne er sat op.
+

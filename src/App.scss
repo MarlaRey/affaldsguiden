@@ -1,16 +1,83 @@
-// @import 'variables';
-// @import 'mixins';
-// @import './components/Header.scss';
-// @import './components/Footer.scss';
-// @import './pages/Home.scss';
-// @import './pages/SortingGuide.scss';
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
 
-/* Global styles */
-body {
+* {
+    font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    box-sizing: border-box;
 }
 
-/* Other global styles */
+// Primary Colors
+$deep-green: #1a3636;
+$forrest-green: #119b1e;
+$moss-green: #677d6a;
+$light-green: #d8eadb;
+$kaki: #d6bd98;
+$dark-grey: #707070;
+
+// Category Colors
+$plast-gummi: #660099;
+$papir: #017ec0;
+$natur: #06682d;
+$glas: #28a745;
+$pap: #c4a167;
+$elektronik: #f18700;
+$trae: #7f652b;
+$textil: #951c3f;
+$braendbart: #6666cc;
+$deponi: #2b2c2e;
+
+// Typografi-stilarter i App.scss
+
+@mixin heading1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600; // Semibold
+    font-size: 36px;
+}
+
+@mixin heading2 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+}
+
+@mixin heading3 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+@mixin heading4 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+@mixin body-text {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400; // Regular
+    font-size: 16px;
+}
+
+// Form Button Styling
+.form-button {
+    width: 160px;
+    height: 39px;
+    background-color: $forrest-green; // Brug forrest-green variabel
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 57px;
+    display: inline-block;
+    font-size: 16px; // Juster fontstørrelsen efter behov
+    cursor: pointer;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25); // Drop shadow
+
+    &:hover {
+        background-color: $deep-green; // Brug deep-green variabel
+    }
+
+    &:active {
+        background-color: darken($forrest-green, 10%); // Mørkere for active state
+    }
+}

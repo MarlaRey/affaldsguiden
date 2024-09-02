@@ -11,14 +11,14 @@ import RecyclingStations from './Pages/RecyclingStations';
 import OrderContainer from './Pages/OrderContainer';
 import Login from './Pages/Login';
 import Article from './Pages/Article';
+import PageLayout from './components/PageLayout';
 
 const App = () => {
     const [user, setUser] = useState(null);  // Definér user-variablen her
 
     return (
         <Router>
-            <div className="App">
-                <Header user={user} />
+            <PageLayout>
                 <main>
                     <Routes>
                         <Route path="/" element={<Home />} />
@@ -30,8 +30,8 @@ const App = () => {
                         <Route path="/articles/:id" element={<Article />} />
                     </Routes>
                 </main>
-                <Footer />
-            </div>
+
+            </PageLayout>
         </Router>
     );
 };

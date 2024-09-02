@@ -1,0 +1,47 @@
+@import '../App.scss';
+
+.header {
+    width: 1440px;
+    height: 134px;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+
+    .logo {
+        width: 362.03px;
+        height: 88px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    .loginButton {
+        background-color: $light-green; /* Light Green */
+        border: none;
+        border-radius: 4px;
+        color: #000; /* Text color */
+        padding: 8px 16px; /* Adjust as needed */
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+        text-decoration: none,;
+
+        &:hover {
+            background-color: $pap;
+        }
+
+        .LoginIcon {
+            width: 20px; /* Adjust size as needed */
+            height: 20px; /* Adjust size as needed */
+            margin-left: 10rem;
+        }
+    }
+}
