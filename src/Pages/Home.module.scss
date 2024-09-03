@@ -1,0 +1,245 @@
+@import '../App.scss';
+
+.home {
+    .hero {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        position: relative; // For at positionere child elements i forhold til hero
+
+
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            margin-bottom: 10rem; // Tilføj margin for at give plads til næste sektion
+            display: block;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+
+
+        }
+
+        @media (max-width: 768px) {
+
+            height: 100vh;
+
+            img {
+                object-fit: cover;
+
+            }
+
+        }
+    }
+
+
+    .newsSection {
+        padding: 2rem;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+
+        max-width: 1440px;
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+
+        .newsBox {
+            display: flex;
+            flex-direction: column; // Styrer elementerne i en kolonne
+            justify-content: space-between; // Sørger for at readMore ligger i bunden
+
+            background-color: #ffffff;
+            border-radius: 8px;
+            width: 48%;
+            padding: 2rem;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+            h3 {
+                @include heading3;
+                margin-top: 0;
+      
+
+                .firstWord {
+                    color: #000000;
+                    display: block;
+                }
+
+                .restOfTitle {
+                    color: $forrest-green;
+                    display: block;
+                    margin-bottom: 0.5rem
+                  
+                }
+            }
+
+            p {
+                @include body-text;
+                color: $dark-grey;
+                margin-bottom: 1rem;
+            }
+
+            .readMore {
+                display: flex;
+                align-items: center;
+                font-weight: bold;
+
+
+
+                img {
+                    object-fit: cover;
+                    width: 15%;
+                    height: auto;
+                }
+            }
+        }
+
+        @media (max-width: 1400px) {
+            flex-direction: column;
+            padding: 1rem; // Juster padding på mindre skærme
+            top: 45%; // Juster position for tablet
+            gap: 1rem;
+            width: 90%;
+            .newsBox {
+                width: 100%;
+                height: 100%;
+                img{
+                    width: 10%!important;
+                }
+
+            }
+
+
+        }
+
+        @media (max-width: 768px) {
+            height: 100%;
+            top: 18%; // Juster position for tablet
+            padding: 1rem; // Mindre padding på mobil
+
+            .newsBox {
+                text-align: center;
+                width: 100%; // Fuldbredde på mobil
+                height: 100%;
+                padding: 1rem;
+                img{
+                    width: 20%!important;
+                }
+            }
+        }
+    }
+
+    .articleSection {
+        background-color: $light-green;
+        margin: 20px 0;
+        padding: 20px;
+        width: 100vw;
+        position: relative;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        display: flex;
+        justify-content: center; // Center horisontalt
+        align-items: center; // Center vertikalt
+        min-height: 400px; // Sæt en minimumshøjde efter behov
+
+        .articleBox {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            width: 1440px;
+
+            img {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+            }
+
+            .articleText {
+                padding: 20px;
+
+                h2 {
+                    margin: 0;
+                    @include heading1;
+
+                    .deepGreen {
+                        color: $deep-green;
+                        display: block;
+                    }
+
+                    .forestGreen {
+                        color: $forrest-green;
+                        display: block;
+                    }
+                }
+
+                p {
+                    @include body-text;
+                    color: $dark-grey;
+                }
+
+                .readMore {
+                    display: flex;
+                    align-items: center;
+                    font-weight: bold;
+                    margin-top: 10px;
+
+                    img {
+                        object-fit: cover;
+                        width: 10%;
+                        height: 10%;
+                    }
+                }
+            }
+
+            .articleImage img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    }
+
+    .tipsSection {
+        .tipsBox {
+            display: flex;
+            align-items: center;
+            border: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+
+            img {
+                width: 100px;
+                height: auto;
+                margin-right: 20px;
+            }
+
+            h2 {
+                margin: 0;
+                @include heading3;
+            }
+
+            p {
+                flex: 1;
+                @include body-text;
+                color: $dark-grey;
+            }
+
+            .readMore {
+                font-weight: bold;
+                margin-left: 20px;
+                color: $forrest-green;
+
+                &:hover {
+                    color: $deep-green;
+                }
+            }
+        }
+    }
+}

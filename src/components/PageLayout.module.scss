@@ -17,7 +17,7 @@
         width: 100%; // Gør bredde dynamisk
         max-width: 1440px;
         margin: 0 auto; // Center main horisontalt
-        background: linear-gradient(to bottom, $light-green, #ffffff);
+        // background: linear-gradient(to bottom, $light-green, #ffffff);
         padding: 20px; // Tilføjer lidt indvendig margin for bedre layout
 
         @media (max-width: 1024px) { // Tablet breakpoint
