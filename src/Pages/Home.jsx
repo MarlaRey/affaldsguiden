@@ -13,8 +13,10 @@ const Home = () => {
     const [article, setArticle] = useState(null);
     const [tips, setTips] = useState(null);
     const titlesRef = useRef([]);
+    const tipsTitleRef = useRef(null); // Ref for h2 i tipsSection
 
     useEffect(() => {
+        // Funktion for h3 titler i newsSection
         titlesRef.current.forEach((titleEl) => {
             if (titleEl) {
                 const words = titleEl.innerText.split(' ');
@@ -23,7 +25,21 @@ const Home = () => {
                 }
             }
         });
-    }, [news]);
+// Funktion for h2 titel i tipsSection
+if (tipsTitleRef.current) {
+    const tipsWords = tipsTitleRef.current.innerText.split(' ');
+    if (tipsWords.length >= 3) {
+        const firstThreeWords = tipsWords.slice(0, 3).join(' ');
+        const restOfTitle = tipsWords.slice(3).join(' ');
+        tipsTitleRef.current.innerHTML = `<span class="${styles.firstWord}">${firstThreeWords}</span> <span class="${styles.restOfTitle}">${restOfTitle}</span>`;
+    } else {
+        // Hvis titlen har mindre end tre ord, vises hele titlen i firstWord
+        tipsTitleRef.current.innerHTML = `<span class="${styles.firstWord}">${tipsWords.join(' ')}</span>`;
+    }
+}
+
+
+    }, [news, tips]); // Tilføj tips som dependency
 
     useEffect(() => {
         const getData = async () => {
@@ -48,18 +64,18 @@ const Home = () => {
                 <img src={malerspandeImg} alt="Hero" />
             </div>
             <section className={styles.newsSection}>
-            {news.map((item, index) => (
-                <div key={item.id} className={styles.newsBox}>
-                    <h3 ref={(el) => titlesRef.current[index] = el}>
-                        {item.title}
-                    </h3>
-                    <p>{item.teaser}</p>
-                    <a href={`/articles/${item.id}`} className={styles.readMore}>
-                        <img src={iconPilHojre} alt="Læs mere" />
-                    </a>
-                </div>
-            ))}
-        </section>
+                {news.map((item, index) => (
+                    <div key={item.id} className={styles.newsBox}>
+                        <h3 ref={(el) => titlesRef.current[index] = el}>
+                            {item.title}
+                        </h3>
+                        <p>{item.teaser}</p>
+                        <a href={`/articles/${item.id}`} className={styles.readMore}>
+                            <img src={iconPilHojre} alt="Læs mere" />
+                        </a>
+                    </div>
+                ))}
+            </section>
             <section className={styles.articleSection}>
                 {article && (
                     <div className={styles.articleBox}>
@@ -69,9 +85,9 @@ const Home = () => {
                                 <span className={styles.forestGreen}>dit sorterede affald</span>
                             </h2>
                             <p>{article.title}{article.teaser}</p>
-                 
+
                             <a href={`/articles/${article.id}`} className={styles.readMoreArticle}>
-                                 <img src={iconPilHojre} alt="Læs mere" />
+                                <img src={iconPilHojre} alt="Læs mere" />
                             </a>
                         </div>
                         <div className={styles.articleImage}>
@@ -83,15 +99,20 @@ const Home = () => {
             <section className={styles.tipsSection}>
                 {tips && (
                     <div className={styles.tipsBox}>
-                        <div>
-                        <img src={tipsOgTricksImg} alt="Tips og Tricks" />
+                        <div className={styles.tipsOgTricksImg}>
+                            <img src={tipsOgTricksImg} alt="Tips og Tricks" />
                         </div>
-                        <div>
-                        <h2>{tips.title}</h2>
-                        <p>{tips.teaser}</p>
-                        <a href={`/articles/${tips.id}`} className={styles.readMore}>
-                                 <img src={iconPilHojre} alt="Læs mere" />
-                            </a>
+                        <div className={styles.tips}>
+                            <div>
+                                <h1>Få gode idéer til, hvordan du gør det nemt at sortere affaldet hjemme hos dig.</h1>
+                            </div>
+                            <div>
+                                <h2 ref={tipsTitleRef}>{tips.title}</h2> {/* Brug ref her */}
+                                <p>{tips.teaser}</p>
+                                <a href={`/articles/${tips.id}`} className={styles.readMore}>
+                                    <img src={iconPilHojre} alt="Læs mere" />
+                                </a>
+                            </div>
                         </div>
                     </div>
                 )}

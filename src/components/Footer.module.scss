@@ -7,6 +7,7 @@
     display: flex;
     align-items: flex-end; // Sørg for, at indholdet placeres i bunden
     padding-bottom: 2rem; // 2rem afstand til bunden
+    padding: 2rem;
 
     .content {
         width: 1440px;
@@ -14,7 +15,9 @@
         display: flex;
         justify-content: space-between;
 
-        .column1, .column2, .column3 {
+        .column1,
+        .column2,
+        .column3 {
             flex: 1;
             display: flex;
         }
@@ -22,11 +25,11 @@
         .column1 {
             text-align: left;
             flex-direction: column;
-            
+
             h2 {
                 @include heading2; // Anvend heading2 mixin til h2
             }
-            
+
             p {
                 @include body-text; // Anvend body-text mixin til p
                 margin: 0;
@@ -37,7 +40,7 @@
         .column2 {
             justify-content: center; // Centrer billederne
             gap: 1rem;
-            
+
             img {
                 border-radius: 8px;
                 width: 143px;
@@ -47,7 +50,7 @@
 
         .column3 {
             justify-content: flex-end; // Højre-juster billederne
-            
+
             .socialImg {
                 margin: 0;
                 width: 208px;
@@ -55,24 +58,9 @@
             }
         }
     }
-    @media (max-width: 1024px) { // Tablet breakpoint
-        .content {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
 
-            .column1, .column2, .column3 {
-                flex: unset;
-                width: 100%;
-            }
-
-            .column3 {
-                justify-content: center;
-            }
-        }
-    }
-
-    @media (max-width: 768px) { // Mobil breakpoint
+    @media (max-width: 1024px) {
+        // Mobil breakpoint
         height: auto;
         padding-bottom: 1rem;
 
@@ -82,19 +70,23 @@
             text-align: center;
             gap: 1rem;
 
-            .column1, .column2, .column3 {
+            .column1,
+            .column2,
+            .column3 {
                 flex: unset;
                 width: 100%;
-      
+                margin-bottom: 1rem;
+
             }
-.column1{
-    text-align: center;
-    margin-top: 2rem;
-}
+
+            .column1 {
+                text-align: center;
+                margin-top: 2rem;
+            }
+
             .column3 {
                 justify-content: center;
             }
         }
     }
 }
-

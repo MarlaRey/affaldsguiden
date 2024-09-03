@@ -2,42 +2,29 @@
 
 .home {
     .hero {
-        width: 100%;
         max-width: 1440px;
         margin: 0 auto;
         position: relative; // For at positionere child elements i forhold til hero
-
-
+        margin-bottom: 13rem; // Tilføj margin for at give plads til næste sektion
 
         img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            margin-bottom: 10rem; // Tilføj margin for at give plads til næste sektion
             display: block;
             mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
             -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
-
-
+            height: 80vh;
         }
 
-        @media (max-width: 768px) {
 
-            height: 100vh;
 
-            img {
-                object-fit: cover;
-
-            }
-
-        }
     }
-
 
     .newsSection {
         padding: 2rem;
         position: absolute;
-        top: 100%;
+        top: 80%;
         left: 50%;
         transform: translateX(-50%);
         width: 70%;
@@ -63,7 +50,6 @@
             h3 {
                 @include heading3;
                 margin-top: 0;
-      
 
                 .firstWord {
                     color: #000000;
@@ -74,7 +60,6 @@
                     color: $forrest-green;
                     display: block;
                     margin-bottom: 0.5rem
-                  
                 }
             }
 
@@ -88,56 +73,49 @@
                 display: flex;
                 align-items: center;
                 font-weight: bold;
-
+                margin-top: auto; // Sørger for, at knappen er placeret i bunden af containeren
 
 
                 img {
                     object-fit: cover;
-                    width: 15%;
+                    width: 80px;
                     height: auto;
                 }
             }
         }
 
-        @media (max-width: 1400px) {
+
+
+        @media (max-width: 1300px) {
             flex-direction: column;
-            padding: 1rem; // Juster padding på mindre skærme
-            top: 45%; // Juster position for tablet
+            height: 100%;
+            top: 20%; // Juster position for tablet
+            padding: 3rem; // Mindre padding på mobil
             gap: 1rem;
             width: 90%;
-            .newsBox {
-                width: 100%;
-                height: 100%;
-                img{
-                    width: 10%!important;
-                }
-
-            }
-
-
-        }
-
-        @media (max-width: 768px) {
-            height: 100%;
-            top: 18%; // Juster position for tablet
-            padding: 1rem; // Mindre padding på mobil
 
             .newsBox {
                 text-align: center;
                 width: 100%; // Fuldbredde på mobil
                 height: 100%;
-                padding: 1rem;
-                img{
-                    width: 20%!important;
-                }
+                padding: 3rem;
+
             }
         }
+        
+        @media (max-width: 700px) {
+            flex-direction: column;
+            height: 100%;
+            top: 15%; // Juster position for tablet
+            padding: 1rem; // Mindre padding på mobil
+            gap: 1rem;
+            width: 98%;}
     }
 
     .articleSection {
+        margin-top: 4rem;
+        margin-bottom: 2rem;
         background-color: $light-green;
-        margin: 20px 0;
-        padding: 20px;
         width: 100vw;
         position: relative;
         left: 50%;
@@ -147,7 +125,6 @@
         display: flex;
         justify-content: center; // Center horisontalt
         align-items: center; // Center vertikalt
-        min-height: 400px; // Sæt en minimumshøjde efter behov
 
         .articleBox {
             display: grid;
@@ -159,10 +136,12 @@
                 object-fit: cover;
                 width: 100%;
                 height: 100%;
+                margin: 0;
             }
 
             .articleText {
-                padding: 20px;
+                padding: 4rem;
+
 
                 h2 {
                     margin: 0;
@@ -202,52 +181,79 @@
 
             .articleImage img {
                 width: 100%;
-                height: auto;
+                height: 100%;
             }
         }
+
         @media (max-width: 768px) {
 
             .articleBox {
-  
-                grid-template-columns:1fr;
-        }}
+
+                grid-template-columns: 1fr;
+            }
+        }
     }
 
     .tipsSection {
+        margin-top: 4rem;
+    
         .tipsBox {
             display: grid;
-            grid-template-columns: 1fr 1fr;;
+            grid-template-columns: 1fr 1fr;
             background-color: #ffffff;
-          
-            border: 1px solid #ddd;
-   
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin: 2rem;
+            overflow: hidden; // Sørger for at skjule eventuelle overskydende indhold
+    
             img {
-                object-fit: cover;
                 width: 100%;
-                height: auto;
-                margin-right: 20px;
+                height: 100%; // Sætter den maksimale højde på billedet til 700px
+                object-fit: cover; // Sørger for, at billedet fylder hele containeren
+                object-position: top; // Justerer billedet, så det er centreret
+                position: relative;
             }
-
+    
+            .tips {
+                padding: 6rem;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+            }
+    
+            h1 {
+                color: $forrest-green;
+                font-size: 28px;
+            }
+    
             h2 {
                 margin: 0;
                 @include heading3;
+                font-size: 36px;
+    
+                .firstWord {
+                    color: #000000;
+                    display: block;
+                }
+    
+                .restOfTitle {
+                    color: $forrest-green;
+                    display: block;
+                    margin-bottom: 0.5rem;
+                }
             }
-
+    
             p {
                 flex: 1;
                 @include body-text;
                 color: $dark-grey;
             }
-
+    
             .readMore {
                 display: flex;
                 align-items: center;
                 font-weight: bold;
                 margin-top: 10px;
-
+    
                 img {
                     object-fit: cover;
                     width: 10%;
@@ -255,5 +261,35 @@
                 }
             }
         }
+    
+        @media (max-width: 1400px) {
+            .tipsBox {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                position: relative;
+                z-index: 200;
+                margin-top: 2rem;
+            .tipsOgTricksImg{
+                height: 500px;
+                object-position: bottom; // Justerer billedet, så det er centreret
+
+            }
+            .tips{
+                padding: 1rem;
+                gap: 2rem;
+                text-align: center;
+                .readMore{
+                    justify-content: end;
+                }
+            }
+            }
+        }
+    
+        @media (max-width: 768px) {
+            // Tilføj dine ændringer her for skærme mindre end 768px
+        }
     }
+    
+    
+    
 }

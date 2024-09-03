@@ -58,29 +58,18 @@
 
     @media (max-width: 1024px) { // Tablet breakpoint
         ul {
-            flex-direction: column;
-            align-items: flex-start;
-
-            li {
-                width: 100%;
-                border-left: none;
-                border-right: none;
-
-                a {
-                    text-align: left;
-                    padding: 10px 15px;
-                }
-            }
+            display: none; // Skjul navigationen på tablet-størrelser
         }
     }
 
     @media (max-width: 768px) { // Mobil breakpoint
-        display: none; // Initialt skjul navigationen
+        ul {
+            display: none; // Skjul navigationen på mobil-størrelser
+        }
 
         &.active { // Vis navigationen når burgermenuen er aktiv
-            display: block;
-            
             ul {
+                display: flex;
                 flex-direction: column;
                 align-items: flex-start;
 
@@ -98,6 +87,7 @@
         }
     }
 }
+
 .burgerMenu {
     display: none;
     background: none;
@@ -106,12 +96,16 @@
     padding: 0;
     width: 30px;
     height: 25px;
-    position: absolute; // Ændret til absolut positionering
-    top: 15px;          // Placeret 15px fra toppen
-    right: 15px;        // Placeret 15px fra højre side
+    position: absolute; // Absolut positionering
+    top: 15px;          // 15px fra toppen
+    right: 15px;        // 15px fra højre side
+
+    @media (max-width: 1024px) { // Tablet breakpoint
+        display: block; // Vis burger-menu ved tablet-størrelser og mindre
+    }
 
     @media (max-width: 768px) {
-        display: block;
+        // Burger-menuen skal også vises på mobil
     }
 
     .burgerBar {

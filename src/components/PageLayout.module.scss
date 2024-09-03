@@ -4,21 +4,22 @@
     margin: auto;
     display: flex;
     flex-direction: column;
-    min-height: 100vh; // Sikrer at layoutet fylder hele browserhøjden
     img{
         width: 100%;
     }
 
     .bgFade {
-        background: linear-gradient(to bottom, $natur, #ffffff);
-    }
+        background: linear-gradient(
+            to bottom, 
+            $natur,  /* Start med naturfarven */
+            #ffffff 30%, /* Skift til hvid midtvejs */
+        );}
 
     .main {
         width: 100%; // Gør bredde dynamisk
         max-width: 1440px;
         margin: 0 auto; // Center main horisontalt
         // background: linear-gradient(to bottom, $light-green, #ffffff);
-        padding: 20px; // Tilføjer lidt indvendig margin for bedre layout
 
         @media (max-width: 1024px) { // Tablet breakpoint
             padding: 15px;
