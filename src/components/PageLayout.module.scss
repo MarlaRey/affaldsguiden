@@ -5,26 +5,37 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh; // Sikrer at layoutet fylder hele browserhøjden
-    .bgFade{
+    img{
+        width: 100%;
+    }
+
+    .bgFade {
         background: linear-gradient(to bottom, $natur, #ffffff);
-
-
     }
 
     .main {
-        width: 1440px;
+        width: 100%; // Gør bredde dynamisk
+        max-width: 1440px;
         margin: 0 auto; // Center main horisontalt
         background: linear-gradient(to bottom, $light-green, #ffffff);
         padding: 20px; // Tilføjer lidt indvendig margin for bedre layout
+
+        @media (max-width: 1024px) { // Tablet breakpoint
+            padding: 15px;
+     
+        }
+
+        @media (max-width: 768px) { // Mobil breakpoint
+            padding: 10px;
+        }
     }
 }
 
-// Baggrundsfarve for header og navigation
 .pageLayout > *:first-child, .pageLayout > *:nth-child(2) {
     background-color: #ffffff;
     margin: 0 auto; // Center main horisontalt
 }
 
-footer{
+footer {
     margin-top: auto; // Skubber footeren til bunden, hvis Main ikke fylder hele siden
 }

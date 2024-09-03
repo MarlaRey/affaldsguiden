@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Navigation.module.scss';
 
-// Links for the menu
 const menuItems = [
     { name: 'Forside', path: '/' },
     { name: 'Sorteringsguide', path: '/sorting-guide' },
@@ -12,21 +11,35 @@ const menuItems = [
 ];
 
 const Navigation = () => {
-    const location = useLocation(); // Hook to get the current path
+    const location = useLocation();
+    const [isMenuOpen, setMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setMenuOpen(!isMenuOpen);
+    };
 
     return (
-    <div className={styles.nul}>
-        <div className={styles.border}/>
-        <nav className={styles.navigation}>
-            <ul>
-                {menuItems.map((item) => (
-                    <li key={item.path} className={location.pathname === item.path ? styles.active : ''}>
-                        <Link to={item.path}>{item.name}</Link>
-                    </li>
-                ))}
-            </ul>
-        </nav>
-       </div>
+        <div className={styles.nul}>
+            <div className={styles.border} />
+            <nav className={`${styles.navigation} ${isMenuOpen ? styles.active : ''}`}>
+                <ul>
+                    {menuItems.map((item) => (
+                        <li key={item.path} className={location.pathname === item.path ? styles.active : ''}>
+                            <Link to={item.path}>{item.name}</Link>
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+            <button
+                className={`${styles.burgerMenu} ${isMenuOpen ? styles.open : ''}`}
+                onClick={toggleMenu}
+                aria-label="Toggle menu"
+            >
+                <span className={styles.burgerBar}></span>
+                <span className={styles.burgerBar}></span>
+                <span className={styles.burgerBar}></span>
+            </button>
+        </div>
     );
 };
 

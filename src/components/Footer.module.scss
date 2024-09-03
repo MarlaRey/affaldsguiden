@@ -55,4 +55,46 @@
             }
         }
     }
+    @media (max-width: 1024px) { // Tablet breakpoint
+        .content {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+
+            .column1, .column2, .column3 {
+                flex: unset;
+                width: 100%;
+            }
+
+            .column3 {
+                justify-content: center;
+            }
+        }
+    }
+
+    @media (max-width: 768px) { // Mobil breakpoint
+        height: auto;
+        padding-bottom: 1rem;
+
+        .content {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1rem;
+
+            .column1, .column2, .column3 {
+                flex: unset;
+                width: 100%;
+      
+            }
+.column1{
+    text-align: center;
+    margin-top: 2rem;
 }
+            .column3 {
+                justify-content: center;
+            }
+        }
+    }
+}
+

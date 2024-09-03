@@ -1,36 +1,39 @@
 @import '../App.scss';
-.nul{
+
+.nul {
     margin: 0;
     padding: 0;
     width: 100vw;
 }
+
 .border {
-    border-bottom: 1px solid $moss-green; // 1px solid linje
-    width: 100vw; // Sørg for, at linjen fylder hele viewport-bredden
-    position: relative; // Gør det muligt at placere det korrekt
+    border-bottom: 1px solid $moss-green;
+    width: 100vw;
+    position: relative;
 }
+
 .navigation {
-    width: 1440px;
-    top: 75px;
-    margin:0 auto;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.15);
-    opacity: 1; // Sørg for, at menuen er synlig
+    opacity: 1;
 
     ul {
         display: flex;
-        justify-content: space-between; // Fylder hele bredden
+        justify-content: space-between;
         margin: 0;
         padding: 0;
         list-style: none;
-        width: 100%; // Sørg for, at ul fylder hele bredden
+        width: 100%;
 
         li {
             margin: 0;
             border-left: 1px solid $moss-green;
-            
             width: 100%;
             text-align: center;
-            &:last-child{
+
+            &:last-child {
                 border-right: 1px solid $moss-green;
             }
 
@@ -47,9 +50,102 @@
             }
 
             &.active a {
-                background-color: $moss-green; // Baggrundsfarve for aktivt menupunkt
-                color: white; // Tekstfarve for aktivt menupunkt
+                background-color: $moss-green;
+                color: white;
             }
         }
+    }
+
+    @media (max-width: 1024px) { // Tablet breakpoint
+        ul {
+            flex-direction: column;
+            align-items: flex-start;
+
+            li {
+                width: 100%;
+                border-left: none;
+                border-right: none;
+
+                a {
+                    text-align: left;
+                    padding: 10px 15px;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) { // Mobil breakpoint
+        display: none; // Initialt skjul navigationen
+
+        &.active { // Vis navigationen når burgermenuen er aktiv
+            display: block;
+            
+            ul {
+                flex-direction: column;
+                align-items: flex-start;
+
+                li {
+                    width: 100%;
+                    border-left: none;
+                    border-right: none;
+
+                    a {
+                        text-align: left;
+                        padding: 10px 15px;
+                    }
+                }
+            }
+        }
+    }
+}
+.burgerMenu {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 25px;
+    position: absolute; // Ændret til absolut positionering
+    top: 15px;          // Placeret 15px fra toppen
+    right: 15px;        // Placeret 15px fra højre side
+
+    @media (max-width: 768px) {
+        display: block;
+    }
+
+    .burgerBar {
+        width: 100%;
+        height: 3px;
+        background-color: $dark-grey;
+        position: absolute;
+        left: 0;
+        transition: transform 0.3s ease, opacity 0.3s ease, top 0.3s ease;
+    }
+
+    .burgerBar:nth-child(1) {
+        top: 0;
+    }
+
+    .burgerBar:nth-child(2) {
+        top: 10px;
+    }
+
+    .burgerBar:nth-child(3) {
+        top: 20px;
+    }
+
+    &.open .burgerBar:nth-child(1) {
+        transform: rotate(45deg);
+        top: 10px;
+    }
+
+    &.open .burgerBar:nth-child(2) {
+        opacity: 0; // Gør midterste linje usynlig
+    }
+
+    &.open .burgerBar:nth-child(3) {
+        transform: rotate(-45deg);
+        top: 10px;
     }
 }
