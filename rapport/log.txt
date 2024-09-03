@@ -8,3 +8,89 @@ lorte bg biullede i footer. jeg synes det er noget sjusk fra grafikerens side at
 mandag eftermiddag: det er gået super godt. jeg føler mig godt med. har ikke haft de store udfordringher. dejligt at få main-layout på plads. og god erfaring fra sidst med at sørge for at få det responsivt fra start. Det laver jeg i aften eller i motrgen tidligt. nu skal jeg til fællesspi.
 
 tirsdag morgen: jeg lægger ud med at lave responsivitet på PageLayout. Jeg tænker det er godt givet ud at få i hus. Herunder hører også burgermenu.
+
+jeg laver forside og frusteres over at opgavebeskrivelse og data ikke passer sammen. Der står det er id 2 der skal ind et sted hvor det slet ikke passer med teksten i det visuelle oplæg. så jeg må tage id 2 og få det til at spille
+
+Jeg laver forside og der er mange spændende udfordringer rent stylingsmæssigt. Jeg løser billede fade sådan her:
+.home {
+    .hero {
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        position: relative;
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block; // Sørger for, at billedet ikke har unødvendige marginer eller padding
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%); // For WebKit-browsere
+        }
+    }
+
+
+mht overskrift i tilfældige nyheder:
+Metode 1: CSS og JavaScript
+Du kan tilføje en lille JavaScript-funktion til at dele titlen op og anvende de ønskede klasser.
+
+HTML/JSX
+Opdater din JSX til at inkludere et ref-attribut for at kunne manipulere DOM-elementerne:
+
+jsx
+Kopier kode
+import React, { useEffect, useRef } from 'react';
+import styles from './PageLayout.module.scss';
+import iconPilHojre from '../assets/img/Icon PilHojre.png';
+
+    useEffect(() => {
+        titlesRef.current.forEach((titleEl) => {
+            if (titleEl) {
+                const words = titleEl.innerText.split(' ');
+                if (words.length > 1) {
+                    titleEl.innerHTML = `<span class="${styles.firstWord}">${words[0]}</span> <span class="${styles.restOfTitle}">${words.slice(1).join(' ')}</span>`;
+                }
+            }
+        });
+    }, [news]);
+
+    return (
+        <section className={styles.newsSection}>
+            {news.map((item, index) => (
+                <div key={item.id} className={styles.newsBox}>
+                    <h3 ref={(el) => titlesRef.current[index] = el}>
+                        {item.title}
+                    </h3>
+                    <p>{item.teaser}</p>
+                    <a href={`/articles/${item.id}`} className={styles.readMore}>
+                        <img src={iconPilHojre} alt="Læs mere" />
+                    </a>
+                </div>
+            ))}
+        </section>
+    );
+};
+
+export default NewsSection;
+
+            h3 {
+                @include heading3;
+                margin-top: 0;
+                line-height: 1.2;
+
+                .firstWord {
+                    color: #000000; // Sort
+                    display: block; // Sørger for at første ord står alene på en linje
+                }
+
+                .restOfTitle {
+                    color: $forrest-green; // Farven på resten af titlen
+                    display: block; // Sørger for at resten af titlen står på en ny linje
+                    margin-top: 0.5rem; // Juster afstand mellem linjer
+                }
+            }
+
+Denne idé fik jeg ved at søge på nettet og fandt information om useRef Hooket på w3scools: https://www.w3schools.com/react/react_useref.asp
+
+SHIT for et arbejde med at gøre forsiden responsiv!
+
+jeg har siddet kl 7 i morges. klokken er nu halv 12 jeg har ondt i kroppen og erbrastløs. jeg må holde en seriøs pause. ud og gå selvom jeg har svært ved at lukke ned så tæt på at have gjort forsiden færdig.

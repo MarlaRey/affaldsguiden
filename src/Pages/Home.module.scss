@@ -152,7 +152,7 @@
         .articleBox {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            gap: 2rem;
             width: 1440px;
 
             img {
@@ -167,6 +167,7 @@
                 h2 {
                     margin: 0;
                     @include heading1;
+                    margin-bottom: 2rem;
 
                     .deepGreen {
                         color: $deep-green;
@@ -182,9 +183,10 @@
                 p {
                     @include body-text;
                     color: $dark-grey;
+                    margin-bottom: 2rem;
                 }
 
-                .readMore {
+                .readMoreArticle {
                     display: flex;
                     align-items: center;
                     font-weight: bold;
@@ -203,19 +205,28 @@
                 height: auto;
             }
         }
+        @media (max-width: 768px) {
+
+            .articleBox {
+  
+                grid-template-columns:1fr;
+        }}
     }
 
     .tipsSection {
         .tipsBox {
-            display: flex;
-            align-items: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr;;
+            background-color: #ffffff;
+          
             border: 1px solid #ddd;
-            padding: 20px;
+   
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
 
             img {
-                width: 100px;
+                object-fit: cover;
+                width: 100%;
                 height: auto;
                 margin-right: 20px;
             }
@@ -232,12 +243,15 @@
             }
 
             .readMore {
+                display: flex;
+                align-items: center;
                 font-weight: bold;
-                margin-left: 20px;
-                color: $forrest-green;
+                margin-top: 10px;
 
-                &:hover {
-                    color: $deep-green;
+                img {
+                    object-fit: cover;
+                    width: 10%;
+                    height: 10%;
                 }
             }
         }

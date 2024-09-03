@@ -6,7 +6,7 @@ import styles from './Home.module.scss';
 import malerspandeImg from '../assets/img/malerspande.jpg';
 import affaldSkovImg from '../assets/img/affald-skov-1.jpg';
 import iconPilHojre from '../assets/img/Icon PilHojre.png';
-import tipsOgTricksImg from '../assets/img/tips-og-tricks.png';
+import tipsOgTricksImg from '../assets/img/tips-og-tricks.jpg';
 
 const Home = () => {
     const [news, setNews] = useState([]);
@@ -70,7 +70,7 @@ const Home = () => {
                             </h2>
                             <p>{article.title}{article.teaser}</p>
                  
-                            <a href={`/articles/${article.id}`} className={styles.readMore}>
+                            <a href={`/articles/${article.id}`} className={styles.readMoreArticle}>
                                  <img src={iconPilHojre} alt="Læs mere" />
                             </a>
                         </div>
@@ -83,10 +83,16 @@ const Home = () => {
             <section className={styles.tipsSection}>
                 {tips && (
                     <div className={styles.tipsBox}>
+                        <div>
                         <img src={tipsOgTricksImg} alt="Tips og Tricks" />
+                        </div>
+                        <div>
                         <h2>{tips.title}</h2>
                         <p>{tips.teaser}</p>
-                        <a href={`/articles/${tips.id}`} className={styles.readMore}>Læs mere</a>
+                        <a href={`/articles/${tips.id}`} className={styles.readMore}>
+                                 <img src={iconPilHojre} alt="Læs mere" />
+                            </a>
+                        </div>
                     </div>
                 )}
             </section>
