@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom'; // Husk at importere useLocation
 import supabase from '../../supabase';
 import styles from './SorteringsGuideDetails.module.scss';
 import drop from '../assets/img/Icon FoldNed.png';
 
 const SorteringsGuideDetails = () => {
     const { sectionId } = useParams();
+    const location = useLocation(); // Bruger useLocation til at hente state
     const [categories, setCategories] = useState([]);
     const [types, setTypes] = useState([]);
     const [typeMap, setTypeMap] = useState({});
     const [openDropdown, setOpenDropdown] = useState(null);
+
+    // Hent sectionTitle fra location.state
+    const sectionTitle = location.state?.sectionTitle || 'Default Title';
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -18,7 +22,7 @@ const SorteringsGuideDetails = () => {
                     .from('trash_categories')
                     .select('*')
                     .eq('section_id', sectionId);
-                
+
                 if (error) throw error;
                 setCategories(data);
             } catch (error) {
@@ -60,7 +64,7 @@ const SorteringsGuideDetails = () => {
                 .from('trash_category_type_rel')
                 .select('type_id, is_allowed')
                 .eq('category_id', categoryId);
-            
+
             if (error) throw error;
 
             // Ensure types is an array and create allowed/notAllowed arrays
@@ -89,7 +93,7 @@ const SorteringsGuideDetails = () => {
 
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>{categories.length > 0 ? categories[0].section_title : 'Kategori'}</h1>
+            <h1 className={styles.title}>{sectionTitle}</h1>
             <h2 className={styles.subtitle}>Vælg en kategori</h2>
             <div className={styles.categoryList}>
                 {categories.map(category => (

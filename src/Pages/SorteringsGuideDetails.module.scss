@@ -35,7 +35,6 @@
     cursor: pointer;
     transition: height 0.3s ease, box-shadow 0.3s ease; /* Glidende ændring af højde og skygge */
     margin-bottom: 1rem; /* Margin til mellemrum mellem bokse */
-    overflow: hidden; /* For at skjule indhold udenfor boxen når ikke udvidet */
 }
 
 .categoryBox.expanded {
@@ -87,7 +86,7 @@
 .dropdownToggle {
     position: absolute;
     z-index: 1000;
-    bottom: 1rem; /* Juster til at være indenfor boxen og i bunden */
+    bottom: -1rem; /* Juster til at være indenfor boxen og i bunden */
     left: 50%; /* Center dropdown-ikonet horisontalt */
     transform: translateX(-50%); /* Juster til at være perfekt centreret */
     cursor: pointer;

@@ -25,30 +25,34 @@ const SorteringsGuide = () => {
         fetchSections();
     }, []);
 
-    const handleSectionClick = (sectionId) => {
-        navigate(`/sorting-guide/${sectionId}`);  // Naviger til SorteringsGuideDetails med sectionId
+    const handleSectionClick = (section) => {
+        navigate(`/sorting-guide/${section.id}`, { 
+            state: { sectionTitle: section.title }
+        });
     };
+    
 
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>Sorteringsguide</h1>
             <h2 className={styles.subtitle}>Vælg en sektion</h2>
             <div className={styles.grid}>
-                {sections.map(section => (
-                    <div 
-                        key={section.id} 
-                        className={styles.sectionBox} 
-                        style={{ backgroundColor: section.color }}
-                        onClick={() => handleSectionClick(section.id)}  // Tilføj klik-håndtering
-                    >
-                        <div className={styles.textContainer}>
-                            <h3 className={styles.sectionTitle}>{section.title}</h3>
-                        </div>
-                        <div className={styles.imageContainer}>
-                            <img src={section.image_url} alt={section.title} className={styles.sectionImage} />
-                        </div>
-                    </div>
-                ))}
+            {sections.map(section => (
+    <div 
+        key={section.id} 
+        className={styles.sectionBox} 
+        style={{ backgroundColor: section.color }}
+        onClick={() => handleSectionClick(section)}  // Send hele sektionen
+    >
+        <div className={styles.textContainer}>
+            <h3 className={styles.sectionTitle}>{section.title}</h3>
+        </div>
+        <div className={styles.imageContainer}>
+            <img src={section.image_url} alt={section.title} className={styles.sectionImage} />
+        </div>
+    </div>
+))}
+
             </div>
         </div>
     );
