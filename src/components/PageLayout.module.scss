@@ -19,7 +19,7 @@
         width: 100%; // Gør bredde dynamisk
         max-width: 1440px;
         margin: 0 auto; // Center main horisontalt
-        // background: linear-gradient(to bottom, $light-green, #ffffff);
+   
 
         @media (max-width: 1024px) { // Tablet breakpoint
             padding: 15px;
@@ -38,5 +38,5 @@
 }
 
 footer {
-    margin-top: auto; // Skubber footeren til bunden, hvis Main ikke fylder hele siden
+    margin-top: auto !important; // Skubber footeren til bunden, hvis Main ikke fylder hele siden
 }

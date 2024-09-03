@@ -1,0 +1,135 @@
+@import '../App.scss';
+
+.container {
+    padding: 2rem;
+    background: linear-gradient(to bottom, $light-green, #ffffff);
+}
+
+.title {
+    font-size: 36px;
+    color: $deep-green;
+    margin-top: 2rem;
+}
+
+.subtitle {
+    font-size: 28px;
+    color: $forrest-green;
+    margin-bottom: 3rem;
+}
+
+.categoryList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.categoryBox {
+    position: relative; /* Sørg for at dropdownToggle og dropdownMenu er positioneret relativt til categoryBox */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid $moss-green; /* Border farve */
+    border-radius: 8px 8px 0px 0px; /* Border-radius */
+    width: 100%; /* Full bredde */
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: height 0.3s ease, box-shadow 0.3s ease; /* Glidende ændring af højde og skygge */
+    margin-bottom: 1rem; /* Margin til mellemrum mellem bokse */
+    overflow: hidden; /* For at skjule indhold udenfor boxen når ikke udvidet */
+}
+
+.categoryBox.expanded {
+    height: auto; /* Højde udvides til at rumme indholdet når dropdown åbnes */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Skift skygge når udvidet */
+}
+
+.categoryBox:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Skygge når musen er over boksen */
+}
+
+.iconContainer {
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    width: 100px;
+    height: 100px;
+}
+
+.titleContainer {
+    flex: 2;
+    padding: 2rem 0;
+    margin-top: auto;
+}
+
+.categoryTitle {
+    font-size: 1.2rem;
+}
+
+.imageContainer {
+    padding-right: 2rem; /* Ingen padding, så billedet fylder hele containeren */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 160px; /* Lad bredden være automatisk */
+    height: 160px;
+}
+
+.categoryImage {
+    object-fit: cover;
+    width: 100%; /* Lad bredden være automatisk */
+    height: 100%; /* Fylder hele højden af containeren */
+}
+
+.dropdownToggle {
+    position: absolute;
+    z-index: 1000;
+    bottom: 1rem; /* Juster til at være indenfor boxen og i bunden */
+    left: 50%; /* Center dropdown-ikonet horisontalt */
+    transform: translateX(-50%); /* Juster til at være perfekt centreret */
+    cursor: pointer;
+    width: 30px; /* Juster størrelsen efter behov */
+    height: 30px; /* Juster størrelsen efter behov */
+}
+
+.dropdownMenu {
+    position: relative; /* Relative til categoryBox når udvidet */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0 0 8px 8px; /* Match border-radius med categoryBox */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    box-sizing: border-box; /* Sørg for padding og border ikke påvirker bredde og højde */
+}
+
+.dropdownSection {
+    flex: 1;
+    padding: 10px;
+    border-right: 1px solid #ddd;
+    overflow-y: auto; /* For at sikre, at lange lister kan scrolles */
+}
+
+.dropdownSection:last-child {
+    border-right: none;
+}
+
+.dropdownSection h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.dropdownSection ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dropdownSection li {
+    margin-bottom: 0.5rem;
+}
+

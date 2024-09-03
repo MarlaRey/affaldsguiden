@@ -1,0 +1,68 @@
+@import '../App.scss';
+.container {
+    background: linear-gradient(to bottom, $light-green, #ffffff);
+    margin: 0 auto;
+    padding: 20px;
+
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.loggedInContent {
+    text-align: center;
+}
+
+.logoutButton {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.commentsSection {
+    margin-top: 20px;
+}
+
+.commentsSection ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.commentsSection li {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 5px;
+}
+
+.loginForm {
+    text-align: center;
+}
+
+.inputError {
+    border: 1px solid #dc3545;
+}
+
+.error {
+    color: #dc3545;
+    margin-top: 5px;
+}
+
+.submitButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.toggleButton {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}

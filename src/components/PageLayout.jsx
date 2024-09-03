@@ -4,17 +4,17 @@ import Navigation from './Navigation';
 import Footer from './Footer';
 import styles from './PageLayout.module.scss';
 
-const PageLayout = ({ children }) => {
+const PageLayout = ({ children, user, setUser }) => {
     return (
         <div className={styles.pageLayout}>
-            <Header />
+            <Header user={user} setUser={setUser} />
             <Navigation />
             <div className={styles.bgFade}>
-            <main className={styles.main}>
-                {children} {/* Indholdet skifter her alt efter hvilken side du er på */}
-            </main>
+                <main className={styles.main}>
+                    {children} {/* Indholdet skifter her alt efter hvilken side du er på */}
+                </main>
             </div>
-            <Footer />
+            <Footer className={styles.footer} />
         </div>
     );
 };

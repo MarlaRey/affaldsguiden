@@ -1,27 +1,52 @@
+// src/Pages/SorteringsGuide.jsx
 import React, { useState, useEffect } from 'react';
-
-import styles from './SorteringsGuide.module.scss';
+import { useNavigate } from 'react-router-dom';  // Importer useNavigate
 import supabase from '../../supabase';
+import styles from './SorteringsGuide.module.scss';
 
-const SortingGuide = () => {
+const SorteringsGuide = () => {
     const [sections, setSections] = useState([]);
+    const navigate = useNavigate(); // Initialiser useNavigate
 
     useEffect(() => {
-        const getData = async () => {
-            const data = await supabase();
-            setSections(data);
+        const fetchSections = async () => {
+            try {
+                const { data, error } = await supabase
+                    .from('trash_sections')
+                    .select('*');
+                
+                if (error) throw error;
+                setSections(data);
+            } catch (error) {
+                console.error('Error fetching sections:', error);
+            }
         };
-        getData();
+
+        fetchSections();
     }, []);
 
+    const handleSectionClick = (sectionId) => {
+        navigate(`/sorting-guide/${sectionId}`);  // Naviger til SorteringsGuideDetails med sectionId
+    };
+
     return (
-        <div className="sorting-guide">
-            <h1>Sorteringsguide</h1>
-            <div className="sections">
+        <div className={styles.container}>
+            <h1 className={styles.title}>Sorteringsguide</h1>
+            <h2 className={styles.subtitle}>Vælg en sektion</h2>
+            <div className={styles.grid}>
                 {sections.map(section => (
-                    <div key={section.id} className="section-box" style={{ backgroundColor: section.color }}>
-                        <h2>{section.name}</h2>
-                        <img src={section.image_url} alt={section.name} />
+                    <div 
+                        key={section.id} 
+                        className={styles.sectionBox} 
+                        style={{ backgroundColor: section.color }}
+                        onClick={() => handleSectionClick(section.id)}  // Tilføj klik-håndtering
+                    >
+                        <div className={styles.textContainer}>
+                            <h3 className={styles.sectionTitle}>{section.title}</h3>
+                        </div>
+                        <div className={styles.imageContainer}>
+                            <img src={section.image_url} alt={section.title} className={styles.sectionImage} />
+                        </div>
                     </div>
                 ))}
             </div>
@@ -29,4 +54,4 @@ const SortingGuide = () => {
     );
 };
 
-export default SortingGuide;
+export default SorteringsGuide;

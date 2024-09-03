@@ -6,7 +6,7 @@ const menuItems = [
     { name: 'Forside', path: '/' },
     { name: 'Sorteringsguide', path: '/sorting-guide' },
     { name: 'Genbrugsstationer', path: '/recycling-stations' },
-    { name: 'Artikler', path: '/articles' },
+
     { name: 'Bestil Beholder', path: '/order-container' },
 ];
 
