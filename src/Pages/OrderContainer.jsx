@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import styles from './OrderContainer.module.scss';
+import { useNavigate } from 'react-router-dom';
 import supabase from '../../supabase';
+import styles from './OrderContainer.module.scss';
 
 const OrderContainer = () => {
     const [containers, setContainers] = useState([]);
+    const [selectedContainerId, setSelectedContainerId] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         address: '',
-        postal_code: '',
+        zipcode: '',
         city: '',
         email: '',
         phone: '',
         container_id: '',
     });
     const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchContainers = async () => {
@@ -25,24 +28,65 @@ const OrderContainer = () => {
         fetchContainers();
     }, []);
 
+    const handleContainerSelect = (containerId) => {
+        setSelectedContainerId(containerId);
+        setFormData({ ...formData, container_id: containerId });
+    };
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const { error } = await supabase.from('orders').insert([formData]);
-
-        if (error) console.error('Error submitting order:', error);
-        else setSuccess(true);
+    
+        const { error } = await supabase.from('orders').insert([
+            {
+                address: formData.address,
+                zipcode: formData.zipcode,
+                city: formData.city,
+                email: formData.email,
+                phone: formData.phone,
+                container_id: formData.container_id,
+            }
+        ]);
+    
+        if (error) {
+            console.error('Error submitting order:', error);
+        } else {
+            setSuccess(true);
+            navigate('/thank-you');
+        }
     };
 
-    if (success) return <p>Tak for din bestilling!</p>;
+    if (success) {
+        return <p>Tak for din bestilling!</p>;
+    }
 
     return (
-        <div className="order-container">
-            <h1>Bestil Container</h1>
-            <form onSubmit={handleSubmit}>
+        <div className={styles.orderContainer}>
+            <h1>Bestil Affaldscontainer</h1>
+            <h2>Hvis I mangler en affaldscontainer i din husstand, kan du bestille en ved at udfylde og sende formularen herunder.</h2>
+            
+            <p>Vælg en af følgende container typer:</p>
+            <div className={styles.containerTypes}>
+                {containers.map((container) => (
+                    <button
+                        key={container.id}
+                        className={`${styles.containerButton} ${selectedContainerId === container.id ? styles.selected : ''}`}
+                        onClick={() => handleContainerSelect(container.id)}
+                    >
+                        <div 
+                            className={styles.icon} 
+                            dangerouslySetInnerHTML={{ __html: container.icon_svg }} // Indsæt SVG-ikonet direkte
+                        />
+                        <span>{container.name}</span>
+                    </button>
+                ))}
+            </div>
+
+            <p>Containeren leveres til:</p>
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <input
                     type="text"
                     name="name"
@@ -61,9 +105,9 @@ const OrderContainer = () => {
                 />
                 <input
                     type="text"
-                    name="postal_code"
+                    name="zipcode"
                     placeholder="Postnummer"
-                    value={formData.postal_code}
+                    value={formData.zipcode}
                     onChange={handleChange}
                     required
                 />
@@ -91,20 +135,9 @@ const OrderContainer = () => {
                     onChange={handleChange}
                     required
                 />
-                <select
-                    name="container_id"
-                    value={formData.container_id}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="">Vælg en container</option>
-                    {containers.map((container) => (
-                        <option key={container.id} value={container.id}>
-                            {container.type}
-                        </option>
-                    ))}
-                </select>
-                <button type="submit">Bestil</button>
+                <button type="submit" className={styles.submitButton} disabled={!selectedContainerId}>
+                    SEND
+                </button>
             </form>
         </div>
     );

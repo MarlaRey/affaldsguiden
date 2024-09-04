@@ -13,6 +13,7 @@ import OrderContainer from './Pages/OrderContainer';
 import Login from './Pages/Login';
 import Article from './Pages/Article';
 import PageLayout from './components/PageLayout';
+import ThankYou from './Pages/ThankYou';
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -28,6 +29,7 @@ const App = () => {
                         <Route path="/recycling-stations" element={<RecyclingStations />} />
                         <Route path="/recycling-stations/:id" element={<StationDetails user={user} />} />
                         <Route path="/order-container" element={<OrderContainer />} />
+                        <Route path="/thank-you" element={<ThankYou />} />
                         <Route path="/login" element={<Login setUser={setUser} />} />
                         <Route path="/articles/:id" element={<Article />} />
                     </Routes>
