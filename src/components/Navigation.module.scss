@@ -1,5 +1,7 @@
 @import '../App.scss';
 
+// src/components/Navigation.module.scss
+
 .nul {
     margin: 0;
     padding: 0;
@@ -58,34 +60,37 @@
 
     @media (max-width: 1024px) { // Tablet breakpoint
         ul {
-            display: none; // Skjul navigationen på tablet-størrelser
-        }
-    }
-
-    @media (max-width: 768px) { // Mobil breakpoint
-        ul {
             display: none; // Skjul navigationen på mobil-størrelser
-        }
+            justify-content:flex-start;
+            padding-top: 8rem;
+            position: absolute; // Position the menu absolutely
+            top: 0; // Adjust based on burger menu position
+            left: 60%;
+            right: 0;
+            bottom: 0;
+            background: white; // Background for dropdown
+            flex-direction: column;
+            z-index: 1000; // Ensure the menu appears above other elements
+            border: 1px solid $moss-green; // Optional: Add border to dropdown
 
-        &.active { // Vis navigationen når burgermenuen er aktiv
-            ul {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
+            li {
+                width: 100%;
+                border-left: none;
+                border-right: none;
 
-                li {
-                    width: 100%;
-                    border-left: none;
-                    border-right: none;
-
-                    a {
-                        text-align: left;
-                        padding: 10px 15px;
-                    }
+                a {
+                    text-align: left;
+                    padding: 10px 15px;
                 }
             }
         }
+
+        &.active ul {
+            display: flex; // Vis menuen når burger-menuen er aktiv
+        }
     }
+
+
 }
 
 .burgerMenu {
@@ -99,14 +104,13 @@
     position: absolute; // Absolut positionering
     top: 15px;          // 15px fra toppen
     right: 15px;        // 15px fra højre side
+    z-index: 2000;      // Ensure burger menu is above other content
 
     @media (max-width: 1024px) { // Tablet breakpoint
         display: block; // Vis burger-menu ved tablet-størrelser og mindre
     }
 
-    @media (max-width: 768px) {
-        // Burger-menuen skal også vises på mobil
-    }
+
 
     .burgerBar {
         width: 100%;

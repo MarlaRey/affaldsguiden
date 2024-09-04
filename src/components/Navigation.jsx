@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styles from './Navigation.module.scss';
 
@@ -6,7 +6,6 @@ const menuItems = [
     { name: 'Forside', path: '/' },
     { name: 'Sorteringsguide', path: '/sorting-guide' },
     { name: 'Genbrugsstationer', path: '/recycling-stations' },
-
     { name: 'Bestil Beholder', path: '/order-container' },
 ];
 
@@ -18,14 +17,24 @@ const Navigation = () => {
         setMenuOpen(!isMenuOpen);
     };
 
+    // Luk menuen, når ruten ændres
+    useEffect(() => {
+        setMenuOpen(false);
+    }, [location.pathname]);
+
     return (
         <div className={styles.nul}>
             <div className={styles.border} />
             <nav className={`${styles.navigation} ${isMenuOpen ? styles.active : ''}`}>
                 <ul>
                     {menuItems.map((item) => (
-                        <li key={item.path} className={location.pathname === item.path ? styles.active : ''}>
-                            <Link to={item.path}>{item.name}</Link>
+                        <li
+                            key={item.path}
+                            className={location.pathname === item.path ? styles.active : ''}
+                        >
+                            <Link to={item.path} onClick={() => setMenuOpen(false)}>
+                                {item.name}
+                            </Link>
                         </li>
                     ))}
                 </ul>
