@@ -1,15 +1,14 @@
 @import '../App.scss';
-.container {
-    padding: 2rem;
-    background: linear-gradient(to bottom, $light-green, #ffffff);
 
+.container {
+    padding: 4rem;
+    background: linear-gradient(to bottom, $light-green, #ffffff);
 }
 
 .mapContainer {
     width: 100%;
-    height: 300px;
-    margin-bottom: 20px;
-    overflow: hidden;
+    height: 400px;
+    margin-bottom: 2rem;
 }
 
 .mapImage {
@@ -19,79 +18,99 @@
 }
 
 .details {
-    padding: 15px;
+    padding: 1rem;
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
 }
 
 .stationName {
     font-size: 2rem;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
 }
 
-.stationAddress, .stationStars {
+.stationAddress,
+.stationEmail,
+.stationPhone {
     font-size: 1.2rem;
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
+}
+
+.starsContainer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+}
+
+.stars {
+    font-size: 1.5rem;
+    color: #ffd700;
 }
 
 .reviewsSection {
-    margin-top: 30px;
+    background: #ffffff;
+    border-radius: 5px;
+    padding: 1rem;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.review {
-    margin-bottom: 20px;
-    padding: 10px;
+.commentsHeader {
+    font-size: 1.5rem;
+    color: #4caf50;
+    margin-bottom: 1rem;
+}
+
+.reviewForm {
+    margin-bottom: 2rem;
+}
+
+.input,
+.textarea,
+.select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-.review h4 {
-    margin: 0 0 5px;
-}
-
-.review p {
-    margin: 5px 0;
-}
-
-.reviewForm {
-    margin-top: 30px;
-}
-
-.formGroup {
-    margin-bottom: 15px;
-}
-
-.formGroup label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.formGroup input, .formGroup textarea, .formGroup select {
-    width: 100%;
-    padding: 8px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.formGroup textarea {
-    resize: vertical;
+.textarea {
     height: 100px;
+    resize: vertical;
 }
 
-button {
-    padding: 10px 15px;
-    background-color: #007BFF;
-    color: #fff;
+.starsSelection {
+    margin-bottom: 1rem;
+}
+
+.submitButton {
+    background-color: #4caf50;
+    color: white;
+    padding: 0.5rem 1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1rem;
 }
 
-button:hover {
-    background-color: #0056b3;
+.submitButton:hover {
+    background-color: #45a049;
+}
+
+.existingReviews {
+    margin-top: 2rem;
+}
+
+.review {
+    margin-bottom: 1rem;
+}
+
+.reviewStars {
+    color: #ffd700;
 }
 
 .error {
     color: red;
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
 }
