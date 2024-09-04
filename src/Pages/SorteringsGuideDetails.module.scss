@@ -132,3 +132,21 @@
     margin-bottom: 0.5rem;
 }
 
+
+
+@media (max-width: 768px) { // Mobil breakpoint
+    .imageContainer {
+        padding-right: 0rem; /* Ingen padding, så billedet fylder hele containeren */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100px; /* Lad bredden være automatisk */
+        height: 100%;
+    }
+    .iconContainer {
+        padding: 0 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
