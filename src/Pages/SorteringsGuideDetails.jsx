@@ -101,20 +101,22 @@ const SorteringsGuideDetails = () => {
                         key={category.id} 
                         className={`${styles.categoryBox} ${openDropdown === category.id ? styles.expanded : ''}`}
                     >
-                        <div className={styles.iconContainer}>
-                            <img src={category.icon_url} alt={category.title} className={styles.icon} />
-                        </div>
-                        <div className={styles.titleContainer}>
-                            <h3 className={styles.categoryTitle}>{category.title}</h3>
-                        </div>
-                        <div className={styles.imageContainer}>
-                            <img src={category.image_url} alt={category.title} className={styles.categoryImage} />
-                        </div>
-                        <div 
-                            className={styles.dropdownToggle} 
-                            onClick={() => handleDropdownToggle(category.id)}
-                        >
-                            <img src={drop} alt="Dropdown" />
+                        <div className={styles.topSection}>
+                            <div className={styles.iconContainer}>
+                                <img src={category.icon_url} alt={category.title} className={styles.icon} />
+                            </div>
+                            <div className={styles.titleContainer}>
+                                <h3 className={styles.categoryTitle}>{category.title}</h3>
+                            </div>
+                            <div className={styles.imageContainer}>
+                                <img src={category.image_url} alt={category.title} className={styles.categoryImage} />
+                            </div>
+                            <div 
+                                className={styles.dropdownToggle} 
+                                onClick={() => handleDropdownToggle(category.id)}
+                            >
+                                <img src={drop} alt="Dropdown" />
+                            </div>
                         </div>
                         {openDropdown === category.id && (
                             <div className={styles.dropdownMenu}>
