@@ -48,7 +48,6 @@
     align-items: center;
     justify-content: space-between;
     padding: 1rem; /* Padding for øverste sektion */
-    border-bottom: 1px solid $moss-green; /* Skil linje mellem øverste og nederste sektion */
 }
 
 .iconContainer {
@@ -105,16 +104,18 @@
 .dropdownMenu {
     display: flex;
     flex-direction: row;
-    border: 1px solid #ddd;
+
     width: 100%;
-    padding: 10px;
+
     background-color: white;
     position: relative; /* Relative til categoryBox når udvidet */
 }
 
 .dropdownSection {
+    padding: 1rem;
     flex: 1;
-    padding: 10px;
+    padding: 2rem;
+    padding-bottom: 3rem;
     border-right: 1px solid #ddd;
     overflow-y: auto; /* For at sikre, at lange lister kan scrolles */
 }
@@ -124,13 +125,23 @@
 }
 
 .dropdownSection h4 {
+    padding-bottom: 0.5rem;
     margin-bottom: 0.5rem;
     font-size: 1.2rem;
+    border-bottom: 1px solid gray;
+}
+
+.dropdownSection:first-of-type h4 {
+    color: $forrest-green;
+}
+
+.dropdownSection:last-of-type h4 {
+    color: $textil;
 }
 
 .dropdownSection ul {
     list-style-type: none;
-    padding: 0;
+
 }
 
 .dropdownSection li {
