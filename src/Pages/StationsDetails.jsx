@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styles from './StationsDetails.module.scss';
 import supabase from '../../supabase';
 
 const StationDetails = ({ user }) => {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [station, setStation] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [newReview, setNewReview] = useState('');
+    const [newStars, setNewStars] = useState(1);
+    const [subject, setSubject] = useState('');
+    const [editingReview, setEditingReview] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
         const fetchStation = async () => {
@@ -38,63 +43,189 @@ const StationDetails = ({ user }) => {
     const handleReviewSubmit = async (e) => {
         e.preventDefault();
         if (!user) {
-            alert('Du skal være logget ind for at skrive en anmeldelse.');
+            setErrorMessage('Du skal være logget ind for at skrive en anmeldelse.');
             return;
         }
 
-        const { error } = await supabase.from('reviews').insert([
-            {
-                site_id: id,
-                content: newReview,
-                user_id: user.id,
-            },
-        ]);
+        const reviewData = {
+            site_id: id,
+            subject: subject,
+            comment: newReview,
+            num_stars: newStars,
+            user_id: user.id,
+            is_active: true,
+            created_at: new Date().toISOString(),
+        };
 
-        if (error) console.error('Error submitting review:', error);
-        else {
+        try {
+            if (editingReview) {
+                // Rediger anmeldelse
+                const { error } = await supabase.from('reviews').update(reviewData).eq('id', editingReview.id);
+                if (error) throw error;
+            } else {
+                // Opret anmeldelse
+                const { error } = await supabase.from('reviews').insert([reviewData]);
+                if (error) throw error;
+            }
+
             setNewReview('');
-            setReviews([...reviews, { content: newReview, user_id: user.id }]);
+            setSubject('');
+            setNewStars(1);
+            setEditingReview(null);
+            setErrorMessage('');
+
+            // Opdater anmeldelseslisten
+            const { data, error: fetchError } = await supabase
+                .from('reviews')
+                .select('*')
+                .eq('site_id', id);
+            if (fetchError) throw fetchError;
+            setReviews(data);
+
+        } catch (error) {
+            console.error('Error submitting review:', error);
+            setErrorMessage('Der opstod en fejl ved indsendelse af anmeldelsen.');
         }
+    };
+
+    const handleEdit = (review) => {
+        setEditingReview(review);
+        setSubject(review.subject);
+        setNewReview(review.comment);
+        setNewStars(review.num_stars);
+    };
+
+    const handleDelete = async (reviewId) => {
+        try {
+            const { error } = await supabase.from('reviews').delete().eq('id', reviewId);
+            if (error) throw error;
+
+            // Opdater anmeldelseslisten
+            const { data, error: fetchError } = await supabase
+                .from('reviews')
+                .select('*')
+                .eq('site_id', id);
+            if (fetchError) throw fetchError;
+            setReviews(data);
+
+        } catch (error) {
+            console.error('Error deleting review:', error);
+            setErrorMessage('Der opstod en fejl ved sletning af anmeldelsen.');
+        }
+    };
+
+    const renderStars = (numStars) => {
+        const totalStars = 5;
+        let stars = '';
+        for (let i = 0; i < totalStars; i++) {
+            stars += i < numStars ? '⭐' : '☆';
+        }
+        return stars;
     };
 
     if (!station) return <p>Loading...</p>;
 
+    const averageStars = reviews.length > 0 
+        ? reviews.reduce((sum, review) => sum + review.num_stars, 0) / reviews.length
+        : 0;
+
     return (
-        <div className="station-details">
-            <h1>{station.name}</h1>
-            <p>{station.address}</p>
-            <p>⭐ {station.num_stars}</p>
-            <div className="map">
+        <div className={styles.container}>
+            <div className={styles.mapContainer}>
                 <iframe
                     title="station-map"
                     src={`https://www.google.com/maps?q=${station.latitude},${station.longitude}&z=15&output=embed`}
-                    width="600"
-                    height="450"
+                    className={styles.map}
                     allowFullScreen=""
                     loading="lazy"
                 ></iframe>
             </div>
-            <div className="reviews">
-                <h2>Anmeldelser</h2>
-                {reviews.map((review, index) => (
-                    <div key={index} className="review">
-                        <p>{review.content}</p>
-                        {user?.id === review.user_id && (
-                            <button>Rediger / Slet</button>
-                        )}
-                    </div>
-                ))}
+            <div className={styles.details}>
+                <div className={styles.infoContainer}>
+                    <h1 className={styles.stationName}>{station.name}</h1>
+                    <p className={styles.stationAddress}>{station.address}</p>
+                    <p>{station.zipcode} {station.city}</p>
+                    <p className={styles.stationEmail}>Email: {station.email}</p>
+                    <p className={styles.stationPhone}>Telefon: {station.phone}</p>
+                </div>
+                <div className={styles.starsContainer}>
+                    <p className={styles.stationStars}>{renderStars(Math.round(averageStars))}</p>
+                </div>
             </div>
-            <div className="add-review">
-                <h3>Skriv en anmeldelse</h3>
-                <form onSubmit={handleReviewSubmit}>
-                    <textarea
-                        value={newReview}
-                        onChange={(e) => setNewReview(e.target.value)}
-                        required
-                    ></textarea>
-                    <button type="submit">Indsend</button>
-                </form>
+            <div className={styles.reviewsSection}>
+                <h2 className={styles.commentsHeader}>Kommentarer</h2>
+                {reviews.length > 0 ? (
+                    reviews.map((review, index) => (
+                        <div key={index} className={styles.review}>
+                            <p className={styles.reviewSubject}>{review.subject}</p>
+                            <p className={styles.reviewContent}>{review.comment}</p>
+                            <p className={styles.reviewDetails}>
+                                {new Date(review.created_at).toLocaleDateString()} {new Date(review.created_at).toLocaleTimeString()}
+                            </p>
+                            <p className={styles.reviewStars}>{renderStars(review.num_stars)}</p>
+                            {user?.id === review.user_id && (
+                                <div className={styles.editDeleteButtons}>
+                                    <button 
+                                        className={styles.editDeleteButton}
+                                        onClick={() => handleEdit(review)}
+                                    >
+                                        Rediger
+                                    </button>
+                                    <button 
+                                        className={styles.editDeleteButton}
+                                        onClick={() => handleDelete(review.id)}
+                                    >
+                                        Slet
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ))
+                ) : (
+                    <p>Der er endnu ikke givet nogle anmeldelser</p>
+                )}
+                {user ? (
+                    <div className={styles.addReview}>
+                        <h3 className={styles.addReviewHeader}>{editingReview ? 'Rediger anmeldelse' : 'Skriv en anmeldelse'}</h3>
+                        <form onSubmit={handleReviewSubmit} className={styles.reviewForm}>
+                            <input
+                                type="text"
+                                placeholder="Emne"
+                                value={subject}
+                                onChange={(e) => setSubject(e.target.value)}
+                                required
+                                className={styles.input}
+                            />
+                            <textarea
+                                value={newReview}
+                                onChange={(e) => setNewReview(e.target.value)}
+                                placeholder="Skriv en anmeldelse"
+                                required
+                                className={styles.textarea}
+                            ></textarea>
+                            <div className={styles.starsSelection}>
+                                <label htmlFor="num_stars">Vælg antal stjerner:</label>
+                                <select
+                                    id="num_stars"
+                                    value={newStars}
+                                    onChange={(e) => setNewStars(parseInt(e.target.value, 10))}
+                                    className={styles.select}
+                                >
+                                    {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n}</option>)}
+                                </select>
+                            </div>
+                            <button type="submit" className={styles.submitButton}>
+                                {editingReview ? 'Opdater anmeldelse' : 'Indsend anmeldelse'}
+                            </button>
+                        </form>
+                        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+                    </div>
+                ) : (
+                    <div className={styles.loginPrompt}>
+                        <p>{errorMessage}</p>
+                        <button onClick={() => navigate('/login')} className={styles.loginButton}>Log ind</button>
+                    </div>
+                )}
             </div>
         </div>
     );
