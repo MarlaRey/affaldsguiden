@@ -157,3 +157,10 @@
         padding: 0 1rem;
     }
 }
+@media (max-width: 475px) { // Mobil breakpoint
+    .dropdownMenu {
+        display: grid;
+        grid-template-columns: 1fr;
+  
+    }
+}
