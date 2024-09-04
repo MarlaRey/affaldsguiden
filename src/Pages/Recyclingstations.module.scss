@@ -89,3 +89,14 @@
     font-size: 1rem; /* Juster størrelse efter behov */
     color: #666; /* Mørkere grå farve for tekst */
 }
+@media (max-width: 768px) { // Mobil breakpoint
+    .container {
+        padding: 2rem;}
+    .grid {
+        grid-template-columns: 1fr;
+    }
+    .title {
+        font-size: 1.7rem;
+     
+    }
+}

@@ -59,11 +59,9 @@ const StationDetails = ({ user }) => {
 
         try {
             if (editingReview) {
-                // Rediger anmeldelse
                 const { error } = await supabase.from('reviews').update(reviewData).eq('id', editingReview.id);
                 if (error) throw error;
             } else {
-                // Opret anmeldelse
                 const { error } = await supabase.from('reviews').insert([reviewData]);
                 if (error) throw error;
             }
@@ -74,7 +72,6 @@ const StationDetails = ({ user }) => {
             setEditingReview(null);
             setErrorMessage('');
 
-            // Opdater anmeldelseslisten
             const { data, error: fetchError } = await supabase
                 .from('reviews')
                 .select('*')
@@ -100,7 +97,6 @@ const StationDetails = ({ user }) => {
             const { error } = await supabase.from('reviews').delete().eq('id', reviewId);
             if (error) throw error;
 
-            // Opdater anmeldelseslisten
             const { data, error: fetchError } = await supabase
                 .from('reviews')
                 .select('*')
@@ -121,6 +117,17 @@ const StationDetails = ({ user }) => {
             stars += i < numStars ? '⭐' : '☆';
         }
         return stars;
+    };
+
+    const formatDate = (dateString) => {
+        const options = { 
+            day: 'numeric', 
+            month: 'long', 
+            year: 'numeric', 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        };
+        return new Intl.DateTimeFormat('da-DK', options).format(new Date(dateString));
     };
 
     if (!station) return <p>Loading...</p>;
@@ -144,7 +151,8 @@ const StationDetails = ({ user }) => {
                 <div className={styles.infoContainer}>
                     <h1 className={styles.stationName}>{station.name}</h1>
                     <p className={styles.stationAddress}>{station.address}</p>
-                    <p>{station.zipcode} {station.city}</p>
+                    <p className={styles.stationAddress}>{station.zipcode} {station.city}</p>
+                    <br />
                     <p className={styles.stationEmail}>Email: {station.email}</p>
                     <p className={styles.stationPhone}>Telefon: {station.phone}</p>
                 </div>
@@ -152,16 +160,63 @@ const StationDetails = ({ user }) => {
                     <p className={styles.stationStars}>{renderStars(Math.round(averageStars))}</p>
                 </div>
             </div>
+
+            {/* Formularen til at skrive anmeldelser */}
+            {user ? (
+                <div className={styles.addReview}>
+                    <h3 className={styles.addReviewHeader}>{editingReview ? 'Rediger anmeldelse' : 'Skriv en anmeldelse'}</h3>
+                    <form onSubmit={handleReviewSubmit} className={styles.reviewForm}>
+                        <input
+                            type="text"
+                            placeholder="Emne"
+                            value={subject}
+                            onChange={(e) => setSubject(e.target.value)}
+                            required
+                            className={styles.input}
+                        />
+                        <textarea
+                            value={newReview}
+                            onChange={(e) => setNewReview(e.target.value)}
+                            placeholder="Skriv en anmeldelse"
+                            required
+                            className={styles.textarea}
+                        ></textarea>
+                        <div className={styles.starsSelection}>
+                            <label htmlFor="num_stars">Vælg antal stjerner: </label>
+                            <select
+                                id="num_stars"
+                                value={newStars}
+                                onChange={(e) => setNewStars(parseInt(e.target.value, 10))}
+                                className={styles.select}
+                            >
+                                {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n}</option>)}
+                            </select>
+                        </div>
+                        <button type="submit" className={styles.submitButton}>
+                            {editingReview ? 'Opdater anmeldelse' : 'Indsend anmeldelse'}
+                        </button>
+                    </form>
+                    {errorMessage && <p className={styles.error}>{errorMessage}</p>}
+                </div>
+            ) : (
+                <div >
+              
+                  
+                </div>
+            )}
+
+            {/* Kommentarer vises nedenunder formularen */}
             <div className={styles.reviewsSection}>
                 <h2 className={styles.commentsHeader}>Kommentarer</h2>
                 {reviews.length > 0 ? (
                     reviews.map((review, index) => (
                         <div key={index} className={styles.review}>
-                            <p className={styles.reviewSubject}>{review.subject}</p>
-                            <p className={styles.reviewContent}>{review.comment}</p>
+                            <h3 className={styles.reviewSubject}>{review.subject}</h3>
                             <p className={styles.reviewDetails}>
-                                {new Date(review.created_at).toLocaleDateString()} {new Date(review.created_at).toLocaleTimeString()}
+                                {formatDate(review.created_at)}
                             </p>
+                            <p className={styles.reviewContent}>{review.comment}</p>
+
                             <p className={styles.reviewStars}>{renderStars(review.num_stars)}</p>
                             {user?.id === review.user_id && (
                                 <div className={styles.editDeleteButtons}>
@@ -184,49 +239,11 @@ const StationDetails = ({ user }) => {
                 ) : (
                     <p>Der er endnu ikke givet nogle anmeldelser</p>
                 )}
-                {user ? (
-                    <div className={styles.addReview}>
-                        <h3 className={styles.addReviewHeader}>{editingReview ? 'Rediger anmeldelse' : 'Skriv en anmeldelse'}</h3>
-                        <form onSubmit={handleReviewSubmit} className={styles.reviewForm}>
-                            <input
-                                type="text"
-                                placeholder="Emne"
-                                value={subject}
-                                onChange={(e) => setSubject(e.target.value)}
-                                required
-                                className={styles.input}
-                            />
-                            <textarea
-                                value={newReview}
-                                onChange={(e) => setNewReview(e.target.value)}
-                                placeholder="Skriv en anmeldelse"
-                                required
-                                className={styles.textarea}
-                            ></textarea>
-                            <div className={styles.starsSelection}>
-                                <label htmlFor="num_stars">Vælg antal stjerner:</label>
-                                <select
-                                    id="num_stars"
-                                    value={newStars}
-                                    onChange={(e) => setNewStars(parseInt(e.target.value, 10))}
-                                    className={styles.select}
-                                >
-                                    {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n}</option>)}
-                                </select>
-                            </div>
-                            <button type="submit" className={styles.submitButton}>
-                                {editingReview ? 'Opdater anmeldelse' : 'Indsend anmeldelse'}
-                            </button>
-                        </form>
-                        {errorMessage && <p className={styles.error}>{errorMessage}</p>}
-                    </div>
-                ) : (
-                    <div className={styles.loginPrompt}>
-                        <p>{errorMessage}</p>
-                        <button onClick={() => navigate('/login')} className={styles.loginButton}>Log ind</button>
-                    </div>
-                )}
-            </div>
+
+            </div>      <div className={styles.loginMessage} ><p >Du skal være logget ind for at skrive en kommentar</p>    
+            <button onClick={() => navigate('/login')} className={styles.loginButton}>Log ind</button>
+                  
+              </div> 
         </div>
     );
 };

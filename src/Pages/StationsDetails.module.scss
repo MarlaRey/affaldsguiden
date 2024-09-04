@@ -5,8 +5,6 @@
     background: linear-gradient(to bottom, $light-green, #ffffff);
 }
 
-
-
 /* Styling for the map */
 .mapContainer {
     width: 100%;
@@ -23,21 +21,23 @@
 .details {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+
     margin-bottom: 20px;
 }
 
 .stationName {
     font-size: 2rem;
     font-weight: bold;
-    margin: 0;
+    margin-bottom: 1rem;
 }
 
-.stationAddress,
+
 .stationEmail,
-.stationPhone {
+.stationPhone  {
+    
     font-size: 1rem;
     margin: 0;
+    font-weight: 600;
 }
 
 .starsContainer {
@@ -54,15 +54,24 @@
 }
 
 .commentsHeader {
-    color: green;
+    margin-top: 4rem;
+    color: $natur;
     font-size: 1.5rem;
     margin-bottom: 10px;
+    border-top: 1px solid $forrest-green;;
+padding-top: 1rem;
+color: $forrest-green;
+   
 }
 
 /* Review list styling */
 .review {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
+    h3{
+        margin-bottom: 0.4rem;
+  
+    }
 }
 
 .reviewContent {
@@ -70,21 +79,27 @@
 }
 
 .reviewDetails {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: #555;
+    margin-bottom: 0.5rem;
 }
 
 .reviewStars {
     font-size: 1rem;
+    margin: 1rem 0;
 }
 
 /* Add review form styling */
 .addReview {
-    margin-top: 20px;
+    margin-top: 3rem;
+    background-color: $light-green;
+    padding: 20px;
+    border-radius: 8px;
+    position: relative; /* Needed for positioning the stars and button */
 }
 
 .addReviewHeader {
-    color: green;
+    color: $natur;
     font-size: 1.2rem;
     margin-bottom: 10px;
 }
@@ -92,51 +107,124 @@
 .reviewForm {
     display: flex;
     flex-direction: column;
+    position: relative;
+    input{
+        padding: 1rem;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
 }
 
 .textarea {
     width: 100%;
     height: 100px;
-    margin-bottom: 10px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     padding: 10px;
+    resize: none;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 4px;
+    font-size: 1rem;
 }
 
 .starsSelection {
+
+    display: flex;
+    justify-content: flex-end; /* Align stars to the top-right */
     margin-bottom: 10px;
+    select{
+        padding:0.5rem;
+        border-radius: 4px;
+        border: none;
+    }
+    label{
+        margin-right: 0.5rem;
+    }
 }
 
-.select {
-    font-size: 1rem;
-    padding: 5px;
+.star {
+    font-size: 1.5rem;
+    color: lightgray; /* Default color for stars */
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.star:hover,
+.star.active {
+    color: gold; /* Color when the star is active */
 }
 
 .submitButton {
-    background-color: green;
+    background-color: $natur;
     color: white;
     border: none;
     padding: 10px;
     font-size: 1rem;
     cursor: pointer;
     border-radius: 4px;
+  width: 150px;
+   
+  
 }
 
 .submitButton:hover {
-    background-color: darkgreen;
+    background-color: dark$natur;
 }
 
-.editDeleteButton {
+.editDeleteButton, .loginButton {
     background-color: #f4f4f4;
     color: #333;
     border: none;
-    padding: 5px;
+    padding: 0.5rem;
     font-size: 0.9rem;
     cursor: pointer;
     border-radius: 4px;
+    margin-right: 0.5rem;
 }
 
 .editDeleteButton:hover {
     background-color: #ddd;
+}
+.loginMessage{
+
+ 
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: $moss-green;
+    .loginButton {
+        background-color: $moss-green;
+        color: #fff;
+        border: none;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border-radius: 4px;
+    margin-top: 1rem;
+    }
+
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        padding: 2rem;
+    }
+
+    .details {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .stationName {
+        font-size: 1.7rem;
+    }
+
+    .starsContainer {
+        margin-top: 1rem;
+        text-align: left;
+        margin-bottom: 2rem;
+    }
 }
