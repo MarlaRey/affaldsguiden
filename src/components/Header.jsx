@@ -19,7 +19,7 @@ const Header = ({ user, setUser }) => {
             <nav className={styles.navigation}>
                 {user ? (
                     <>
-                        <span className={styles.username}>You are logged in as {user.email}</span>
+                        <span className={styles.username}>You are logged in as {user.email}     </span>
                         <button onClick={handleLogout} className={styles.logoutButton}>
                             <img src={logoutIcon} alt="Logout" />
                         </button>
