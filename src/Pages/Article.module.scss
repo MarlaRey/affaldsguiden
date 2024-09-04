@@ -1,0 +1,51 @@
+@import '../App.scss';
+
+  
+    .article {
+        padding: 2rem;
+        background: linear-gradient(to bottom, $light-green, #ffffff);
+        
+        h1 {
+            color: #004d00; // Dark green
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+    
+        .teaser {
+            color: #006400; // Forest green
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+    
+        .publishedAt {
+            color: #666; // Neutral grey
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+    
+        img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+    
+        .content {
+            line-height: 1.6;
+            font-size: 1rem;
+    
+            p {
+                margin-bottom: 15px;
+            }
+    
+            a {
+                color: #004d00;
+                text-decoration: underline;
+    
+                &:hover {
+                    color: #006400;
+                }
+            }
+        }
+    }
+    
