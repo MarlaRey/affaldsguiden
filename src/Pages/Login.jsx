@@ -87,27 +87,8 @@ const Login = ({ setUser, user }) => {
 
     return (
         <div className={styles.container}>
-            {user ? (
-                <div className={styles.loggedInContent}>
-                    <h1>Hej, du er logget ind som <strong>{user.email}</strong></h1>
-                    <button onClick={handleLogout} className={styles.logoutButton}>
-                        Log ud
-                    </button>
-                    <div className={styles.commentsSection}>
-                        <h2>Din Kommentaroversigt</h2>
-                        {comments.length > 0 ? (
-                            <ul>
-                                {comments.map((comment) => (
-                                    <li key={comment.id}>{comment.text}</li> // Antager du har en text kolonne
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>Ingen kommentarer at vise</p>
-                        )}
-                    </div>
-                </div>
-            ) : (
-                <div className={styles.loginForm}>
+      
+                <div className={styles.form}>
                     <h1>{isSignup ? 'Opret Konto' : 'Login'}</h1>
                     {error && <p className={styles.error}>{error}</p>}
                     <form onSubmit={handleAuth} className={styles.form}>
@@ -137,7 +118,7 @@ const Login = ({ setUser, user }) => {
                         {isSignup ? 'Har du allerede en konto? Login' : 'Har du ikke en konto? Opret en'}
                     </button>
                 </div>
-            )}
+    
         </div>
     );
 };
