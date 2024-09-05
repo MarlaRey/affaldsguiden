@@ -1,0 +1,14 @@
+@import '../App.scss';
+
+.container {
+    padding: 2rem;
+    background: linear-gradient(to bottom, $light-green, #ffffff);
+    height: 90vh;
+}
+
+
+@media (max-width: 468px) {
+    .container {
+        text-align: center;
+        height: 60vh;
+    }}

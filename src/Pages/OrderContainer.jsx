@@ -64,7 +64,7 @@ const OrderContainer = () => {
     }
 
     return (
-        <div className={styles.orderContainer}>
+        <div className={styles.container}>
             <h1>Bestil Affaldscontainer</h1>
             <h2>Hvis I mangler en affaldscontainer i din husstand, kan du bestille en ved at udfylde og sende formularen herunder.</h2>
             
@@ -76,11 +76,13 @@ const OrderContainer = () => {
                         className={`${styles.containerButton} ${selectedContainerId === container.id ? styles.selected : ''}`}
                         onClick={() => handleContainerSelect(container.id)}
                     >
+                        
+                        <span className={styles.containerTypeName}>{container.name}</span>
+
                         <div 
                             className={styles.icon} 
-                            dangerouslySetInnerHTML={{ __html: container.icon_svg }} // Indsæt SVG-ikonet direkte
+                            dangerouslySetInnerHTML={{ __html: container.icon_svg }} 
                         />
-                        <span>{container.name}</span>
                     </button>
                 ))}
             </div>
