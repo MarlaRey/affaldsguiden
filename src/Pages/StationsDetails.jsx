@@ -4,49 +4,77 @@ import styles from './StationsDetails.module.scss';
 import supabase from '../../supabase';
 
 const StationDetails = ({ user }) => {
+    // Hent 'id' parameteren fra URL'en
     const { id } = useParams();
+    // Håndter navigation
     const navigate = useNavigate();
+    
+    // State til at holde stationens data
     const [station, setStation] = useState(null);
+    // State til at holde anmeldelserne
     const [reviews, setReviews] = useState([]);
+    // State til at håndtere indholdet af en ny anmeldelse
     const [newReview, setNewReview] = useState('');
+    // State til at håndtere antallet af stjerner i en ny anmeldelse
     const [newStars, setNewStars] = useState(1);
+    // State til at håndtere emnet for en ny anmeldelse
     const [subject, setSubject] = useState('');
+    // State til at håndtere redigering af en eksisterende anmeldelse
     const [editingReview, setEditingReview] = useState(null);
+    // State til at håndtere fejlmeddelelser
     const [errorMessage, setErrorMessage] = useState('');
 
+    // Effekt der henter stationens data og anmeldelser fra Supabase
     useEffect(() => {
+        // Funktion til at hente stationens data
         const fetchStation = async () => {
             const { data, error } = await supabase
-                .from('recycling_sites')
-                .select('*')
-                .eq('id', id)
-                .single();
+                .from('recycling_sites') // Vælg tabellen 'recycling_sites'
+                .select('*') // Vælg alle kolonner
+                .eq('id', id) // Filtrer på stationens id
+                .single(); // Hent kun én post
 
-            if (error) console.error('Error fetching station:', error);
-            else setStation(data);
+            if (error) {
+                // Log fejl hvis der opstår en
+                console.error('Error fetching station:', error);
+            } else {
+                // Sæt stationens data i state
+                setStation(data);
+            }
         };
 
+        // Funktion til at hente anmeldelser for stationen
         const fetchReviews = async () => {
             const { data, error } = await supabase
-                .from('reviews')
-                .select('*')
-                .eq('site_id', id);
+                .from('reviews') // Vælg tabellen 'reviews'
+                .select('*') // Vælg alle kolonner
+                .eq('site_id', id); // Filtrer på stationens id
 
-            if (error) console.error('Error fetching reviews:', error);
-            else setReviews(data);
+            if (error) {
+                // Log fejl hvis der opstår en
+                console.error('Error fetching reviews:', error);
+            } else {
+                // Sæt anmeldelserne i state
+                setReviews(data);
+            }
         };
 
+        // Kald funktionerne for at hente data
         fetchStation();
         fetchReviews();
-    }, [id]);
+    }, [id]); // Kør effekt hver gang id ændres
 
+    // Håndter anmeldelsesindsendelse
     const handleReviewSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Forhindre standard formularhandling
+
+        // Kontrollér om brugeren er logget ind
         if (!user) {
             setErrorMessage('Du skal være logget ind for at skrive en anmeldelse.');
             return;
         }
 
+        // Data for den nye anmeldelse
         const reviewData = {
             site_id: id,
             subject: subject,
@@ -58,20 +86,24 @@ const StationDetails = ({ user }) => {
         };
 
         try {
+            // Hvis vi redigerer en anmeldelse, opdater den
             if (editingReview) {
                 const { error } = await supabase.from('reviews').update(reviewData).eq('id', editingReview.id);
                 if (error) throw error;
             } else {
+                // Ellers indsæt en ny anmeldelse
                 const { error } = await supabase.from('reviews').insert([reviewData]);
                 if (error) throw error;
             }
 
+            // Nulstil formularfelter og state
             setNewReview('');
             setSubject('');
             setNewStars(1);
             setEditingReview(null);
             setErrorMessage('');
 
+            // Opdater anmeldelserne
             const { data, error: fetchError } = await supabase
                 .from('reviews')
                 .select('*')
@@ -85,6 +117,7 @@ const StationDetails = ({ user }) => {
         }
     };
 
+    // Håndter redigering af anmeldelse
     const handleEdit = (review) => {
         setEditingReview(review);
         setSubject(review.subject);
@@ -92,11 +125,13 @@ const StationDetails = ({ user }) => {
         setNewStars(review.num_stars);
     };
 
+    // Håndter sletning af anmeldelse
     const handleDelete = async (reviewId) => {
         try {
             const { error } = await supabase.from('reviews').delete().eq('id', reviewId);
             if (error) throw error;
 
+            // Opdater anmeldelserne efter sletning
             const { data, error: fetchError } = await supabase
                 .from('reviews')
                 .select('*')
@@ -110,15 +145,18 @@ const StationDetails = ({ user }) => {
         }
     };
 
+    // Funktion til at generere stjerner baseret på vurdering
     const renderStars = (numStars) => {
         const totalStars = 5;
         let stars = '';
         for (let i = 0; i < totalStars; i++) {
+            // Tilføj fyldte stjerner (⭐) eller tomme stjerner (☆)
             stars += i < numStars ? '⭐' : '☆';
         }
         return stars;
     };
 
+    // Funktion til at formatere dato
     const formatDate = (dateString) => {
         const options = { 
             day: 'numeric', 
@@ -130,8 +168,10 @@ const StationDetails = ({ user }) => {
         return new Intl.DateTimeFormat('da-DK', options).format(new Date(dateString));
     };
 
+    // Hvis stationen ikke er hentet endnu, vis en "Loading..." besked
     if (!station) return <p>Loading...</p>;
 
+    // Beregn gennemsnitlige stjerner baseret på anmeldelser
     const averageStars = reviews.length > 0 
         ? reviews.reduce((sum, review) => sum + review.num_stars, 0) / reviews.length
         : 0;
@@ -140,11 +180,14 @@ const StationDetails = ({ user }) => {
         <div className={styles.container}>
             <div className={styles.mapContainer}>
                 <iframe
-                    title="station-map"
-                    src={`https://www.google.com/maps?q=${station.latitude},${station.longitude}&z=15&output=embed`}
-                    className={styles.map}
+                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2170.211101954083!2d9.96259189469518!3d57.047926023412984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464932b6a2b7696b%3A0x861634f2bf524040!2s%C3%98ster%20Uttrup%20Vej%201%2C%209000%20Aalborg!5e0!3m2!1sda!2sdk!4v1725436036034!5m2!1sda!2sdk`}
+                    width="100%"
+                    height="250"
+                    style={{ border: 0 }}
                     allowFullScreen=""
                     loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title={`Map for ${station.name}`}
                 ></iframe>
             </div>
             <div className={styles.details}>
@@ -181,6 +224,7 @@ const StationDetails = ({ user }) => {
                             required
                             className={styles.textarea}
                         ></textarea>
+                         
                         <div className={styles.starsSelection}>
                             <label htmlFor="num_stars">Vælg antal stjerner: </label>
                             <select
@@ -188,7 +232,11 @@ const StationDetails = ({ user }) => {
                                 value={newStars}
                                 onChange={(e) => setNewStars(parseInt(e.target.value, 10))}
                                 className={styles.select}
-                            >
+                            >{/* En callback-funktion, der kaldes, når brugerens valg ændres.
+                                e er en begivenhedsobjektet, der indeholder information om den ændrede <select>.
+                                e.target.value er den nye værdi, som brugeren har valgt.
+                                parseInt(e.target.value, 10) konverterer denne værdi fra en streng til et heltal.
+                                setNewStars(...) opdaterer state-variablen newStars med den nye værdi, som brugeren har valgt. */}
                                 {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n}</option>)}
                             </select>
                         </div>
@@ -198,12 +246,7 @@ const StationDetails = ({ user }) => {
                     </form>
                     {errorMessage && <p className={styles.error}>{errorMessage}</p>}
                 </div>
-            ) : (
-                <div >
-              
-                  
-                </div>
-            )}
+            ) : null}
 
             {/* Kommentarer vises nedenunder formularen */}
             <div className={styles.reviewsSection}>
@@ -216,7 +259,6 @@ const StationDetails = ({ user }) => {
                                 {formatDate(review.created_at)}
                             </p>
                             <p className={styles.reviewContent}>{review.comment}</p>
-
                             <p className={styles.reviewStars}>{renderStars(review.num_stars)}</p>
                             {user?.id === review.user_id && (
                                 <div className={styles.editDeleteButtons}>
@@ -239,11 +281,13 @@ const StationDetails = ({ user }) => {
                 ) : (
                     <p>Der er endnu ikke givet nogle anmeldelser</p>
                 )}
-
-            </div>      <div className={styles.loginMessage} ><p >Du skal være logget ind for at skrive en kommentar</p>    
-            <button onClick={() => navigate('/login')} className={styles.loginButton}>Log ind</button>
-                  
-              </div> 
+            </div>
+            {!user && (
+                <div className={styles.loginMessage}>
+                    <p>Du skal være logget ind for at skrive en anmeldelse</p>    
+                    <button onClick={() => navigate('/login')} className={styles.loginButton}>Log ind</button>
+                </div>
+            )}
         </div>
     );
 };

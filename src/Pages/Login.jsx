@@ -18,36 +18,37 @@ const Login = ({ setUser, user }) => {
     };
 
     // Hent kommentarer
-    const fetchComments = async () => {
-        try {
-            const { data, error } = await supabase
-                .from('comments') // Erstat 'comments' med din tabelnavn
-                .select('*')
-                .eq('user_id', user.id); // Antager at du har en user_id kolonne
-            if (error) throw error;
-            setComments(data);
-        } catch (error) {
-            setError(error.message);
-        }
-    };
+const fetchComments = async () => {
+    try {
+        const { data, error } = await supabase
+            .from('comments')
+            .select('*')
+            .eq('user_id', user.id); // Henter kommentarer fra Supabase hvor user_id matcher
+        if (error) throw error;
+        setComments(data); // Opdaterer tilstanden med de hentede kommentarer
+    } catch (error) {
+        setError(error.message); // Viser en generel fejlbesked hvis noget går galt
+    }
+};
+
 
     // Håndter autentificering (login/tilmelding)
     const handleAuth = async (e) => {
-        e.preventDefault();
-        setError('');
+        e.preventDefault(); // Forhindrer formularens standardadfærd (siden opdateres ikke)
+        setError(''); // Nulstiller fejlbeskeder
         setEmailError('');
         setPasswordError('');
-
+    
         if (!validateEmail(email)) {
             setEmailError('Ugyldig emailadresse');
-            return;
+            return; // Stopper, hvis emailen er ugyldig
         }
-
+    
         try {
             if (isSignup) {
                 const { data, error } = await supabase.auth.signUp({ email, password });
                 if (error) throw error;
-                setUser(data.user);
+                setUser(data.user); // Sætter den autentificerede bruger
             } else {
                 const { data, error } = await supabase.auth.signInWithPassword({ email, password });
                 if (error) {
@@ -57,33 +58,25 @@ const Login = ({ setUser, user }) => {
                         throw error;
                     }
                 } else {
-                    setUser(data.user);
+                    setUser(data.user); // Sætter den autentificerede bruger
                 }
             }
         } catch (error) {
-            setError(error.message);
+            setError(error.message); // Generel fejlbesked vises ved problemer
         }
-
-        // Ryd felterne efter submit
+    
+        // Nulstiller inputfelterne
         setEmail('');
         setPassword('');
     };
+    
 
-    // Håndter logout
-    const handleLogout = async () => {
-        await supabase.auth.signOut();
-        setUser(null);  // Nulstiller brugeren ved log ud
-        setEmail('');    // Tømmer email-feltet
-        setPassword(''); // Tømmer adgangskode-feltet
-        setIsSignup(false); // Tilbage til login-tilstand
-    };
-
-    // Hent kommentarer når komponenten er mountet
     useEffect(() => {
         if (user) {
-            fetchComments();
+            fetchComments(); // Henter kommentarer, når brugeren er logget ind
         }
-    }, [user]);
+    }, [user]); // Kører kun når `user` ændrer sig (dvs. når brugeren logger ind/ud)
+    
 
     return (
         <div className={styles.container}>
