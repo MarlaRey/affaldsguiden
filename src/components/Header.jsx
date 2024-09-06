@@ -19,12 +19,12 @@ const Header = ({ user, setUser }) => {
             </Link>
             <nav className={styles.navigation}>
                 {user ? ( // Hvis der er en bruger logget ind
-                    <>
-                        <span className={styles.username}>You are logged in as {user.email} </span> {/* Viser brugerens email */}
+                    <div className={styles.userLog}>
+                        <span className={styles.username}>Du er logget ind som  {user.email} </span> {/* Viser brugerens email */}
                         <button onClick={handleLogout} className={styles.logoutButton}>
-                            <img src={logoutIcon} alt="Logout" /> {/* Viser logout-ikonet */}
+                          Logout
                         </button>
-                    </>
+                    </div>
                 ) : ( // Hvis ingen bruger er logget ind
                     <Link to="/login" className={styles.loginButton}>
                         <span>Login</span> {/* Viser en login-knap */}

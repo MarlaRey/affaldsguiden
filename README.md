@@ -1,8 +1,4 @@
-# React + Vite
+# Svendeprøve-prøve2
+Jeg har fået til opgave at bygge en frontend løsning til Affaldsguiden, som er et nyt regionalt tiltag omkring bæredygtig sortering af affald i Nordjylland. Regionen skal have en applikation som kan vejlede borgere i at sortere deres affald på et udvalg af regionens genbrugsstationer. I samme ombæring ønsker regionen også at modtage feedback fra brugernes oplevelser på de forskellige genbrugsstationer. Applikationen skal fremstå i overensstemmelse med et udleveret design.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Sitets indhold skal kaldes fra et webbaseret API.
