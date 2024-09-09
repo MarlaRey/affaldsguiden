@@ -72,24 +72,24 @@ const RecyclingStations = () => {
         navigate(`/recycling-stations/${stationId}`);
     };
 
-// Funktion til at generere stjerner baseret på vurdering
-const renderStars = (numStars) => {
-    // Definer det totale antal stjerner, der skal vises (typisk 5 stjerner)
-    const totalStars = 5;
-    
-    // Initialiser en tom streng til at opbygge stjernerepræsentationen
-    let stars = '';
-    
-    // Loop gennem antallet af stjerner, der skal vises
-    for (let i = 0; i < totalStars; i++) {
-        // Tilføj en fyldt stjerne (⭐) hvis indekset er mindre end det angivne antal stjerner
-        // Ellers, tilføj en tom stjerne (☆)
-        stars += i < numStars ? '⭐' : '☆';
-    }
-    
-    // Returner den opbyggede streng med stjerner
-    return stars;
-};
+    // Funktion til at generere stjerner baseret på vurdering
+    const renderStars = (numStars) => {
+        // Definer det totale antal stjerner, der skal vises (typisk 5 stjerner)
+        const totalStars = 5;
+
+        // Initialiser en tom streng til at opbygge stjernerepræsentationen
+        let stars = '';
+
+        // Loop gennem antallet af stjerner, der skal vises
+        for (let i = 0; i < totalStars; i++) {
+            // Tilføj en fyldt stjerne (⭐) hvis indekset er mindre end det angivne antal stjerner
+            // Ellers, tilføj en tom stjerne (☆)
+            stars += i < numStars ? '⭐' : '☆';
+        }
+
+        // Returner den opbyggede streng med stjerner
+        return stars;
+    };
 
 
     return (
@@ -106,7 +106,7 @@ const renderStars = (numStars) => {
                         <div className={styles.mapContainer}>
                             {/* Indlejret Google Maps iframe burde have været stationens placering, men det kunne jeg ikke få til at virke*/}
                             <iframe
-                                src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2170.211101954083!2d9.96259189469518!3d57.047926023412984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464932b6a2b7696b%3A0x861634f2bf524040!2s%C3%98ster%20Uttrup%20Vej%201%2C%209000%20Aalborg!5e0!3m2!1sda!2sdk!4v1725436036034!5m2!1sda!2sdk`}
+                                src={`https://www.google.com/maps?q=${station.longitude},${station.latitude}&z=14&output=embed`}
                                 width="100%"
                                 height="250"
                                 style={{ border: 0 }}

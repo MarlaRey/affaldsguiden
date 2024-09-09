@@ -180,7 +180,7 @@ const StationDetails = ({ user }) => {
         <div className={styles.container}>
             <div className={styles.mapContainer}>
                 <iframe
-                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2170.211101954083!2d9.96259189469518!3d57.047926023412984!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x464932b6a2b7696b%3A0x861634f2bf524040!2s%C3%98ster%20Uttrup%20Vej%201%2C%209000%20Aalborg!5e0!3m2!1sda!2sdk!4v1725436036034!5m2!1sda!2sdk`}
+                src={`https://www.google.com/maps?q=${station.longitude},${station.latitude}&z=14&output=embed`}
                     width="100%"
                     height="250"
                     style={{ border: 0 }}
